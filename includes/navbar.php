@@ -6,7 +6,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-links" aria-controls="#navbar-links" aria-expanded="false" aria-label="Toggle-navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <?php if ($currentPage == 'dashboard.php'):?>
+        <?php if ($currentPage == 'dashboard'):?>
         <div class="collapse navbar-collapse justify-content-end" id="navbar-links">
             <div class="navbar-nav">
                 <a class="navi-tem nav-link" id="inicio-menu" href="#">Início</a>
