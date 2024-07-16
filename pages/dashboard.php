@@ -30,13 +30,13 @@
 
 </head>
 
-<body>
-    <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php")?>
-
-    <?php include_once '../includes/navbar.php'; ?>
-    
-    <?php include_once '../includes/footer.php'; ?>
-
+<body id="dashboard-body">
+    <div>
+        <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php")?>
+        <?php include_once '../includes/navbar.php'; ?>
+        <img src="../assets/img/dashboard.jpg" alt="" class="img-cover" id="dashboard-image">
+        <?php include_once '../includes/footer.php'; ?>
+    </div>
 </body>
 
 </html>

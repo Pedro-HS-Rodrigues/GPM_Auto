@@ -1,6 +1,10 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f0f0f0
+    background-color: #f0f0f0;
+
+}
+#dashboard-body{
+    overflow: hidden;
 }
 
 header, .navbar{
@@ -81,27 +85,24 @@ p, li {
 
 #page-footer footer{
     background-color: #20263F;
-    height: 96px;
 }
 #page-footer p{
     color: #FFF;
 }
 
 #social-icons {
-    display: flex;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
-
-#main-footer {
-    display: flex;
-    align-items: center;
-    height: 96px;
-    padding-left: 10px;
-    padding-right: 70px;
+#info{
+    padding-left: 70px;
 }
 
 .social-icon {
     margin-right: 10px;
-    margin-bottom: 10px
+    margin-bottom: 10px;
+    padding-top: 10px;
 }
 
 .social-icon:last-child {
