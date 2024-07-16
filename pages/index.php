@@ -32,11 +32,8 @@
 
 <body>
     <?php include_once '../includes/navbar.php'; ?>
-    <div class="container-fluid full-height d-flex justify-content-center align-items-center" id="dashboard">
-        <img src="../assets/img/dashboard.jpg" alt="dashboard" class="img-fluid img-cover">
-    </div>
     
-    <?php include '../includes/footer.php'; ?>
+    <?php include_once '../includes/footer.php'; ?>
 
 </body>
 
