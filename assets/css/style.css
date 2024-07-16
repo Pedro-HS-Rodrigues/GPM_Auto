@@ -1,5 +1,6 @@
 body {
     font-family: 'Montserrat', sans-serif;
+    background-color: #f0f0f0
 }
 
 header, .navbar{
@@ -14,7 +15,9 @@ p, li {
 #nav-container {
     padding-top: 0;
     padding-bottom: 0;
+
 }
+
 
 #logo{
     width: 58.39px;
@@ -104,3 +107,46 @@ p, li {
 .social-icon:last-child {
     margin-right: 0;
 }
+
+#login-form {
+    padding-top: 96px;
+    align-items: center;
+    background-color: #FFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 60px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 60px;
+    border-radius: 20px;
+}
+
+#form-icon{
+    background: linear-gradient(to bottom right, #3D466E, #030612);
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 13px;
+}
+
+#logo-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center
+}
+#login-title{
+    font-size: 32px;
+    color: #212529;
+}
+#login-description{
+    font-size: 15px;
+    color: #6C757D;
+}
+#login-submit{
+    width: 100%;
+}
+
