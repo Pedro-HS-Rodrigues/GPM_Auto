@@ -51,7 +51,7 @@
     <div class="container" id="materiais-table">
         <div class=" ">
             <div class="table-container">
-                <table id="materiais" class="table table-striped">
+                <table id="materiais" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -81,14 +81,6 @@
                         }
                         ?>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Tipo</th>
-                            <th>Quantidade</th>
-                            <th>Ação</th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>

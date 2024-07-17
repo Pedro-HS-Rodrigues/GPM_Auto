@@ -165,3 +165,11 @@ p, li {
 #add-material{
     padding-top: 10px;
 }
+
+#materiais{
+    border: 2px solid #CDCDCD;
+}
+
+.table-bordered{
+    border-radius: 12px;
+}
