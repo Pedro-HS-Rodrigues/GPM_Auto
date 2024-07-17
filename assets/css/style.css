@@ -151,3 +151,17 @@ p, li {
     width: 100%;
 }
 
+/*Materiais*/
+
+.table-container{
+    margin-top: 96px;
+
+}
+
+#editar-button{
+    color: #0D6EFD;
+}
+
+#add-material{
+    padding-top: 10px;
+}
