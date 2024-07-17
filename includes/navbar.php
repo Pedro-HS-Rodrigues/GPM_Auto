@@ -6,12 +6,12 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-links" aria-controls="#navbar-links" aria-expanded="false" aria-label="Toggle-navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <?php if ($currentPage != 'dashboard'):?>
+        <?php if ($currentPage != 'login'):?>
         <div class="collapse navbar-collapse justify-content-end" id="navbar-links">
             <div class="navbar-nav">
-                <a class="navi-tem nav-link" id="inicio-menu" href="#">Início</a>
+                <a class="navi-tem nav-link" id="inicio-menu" href="../pages/dashboard.php">Início</a>
                 <a class="navi-tem nav-link" id="add-menu" href="#">Adicionar usuário</a>
-                <a class="navi-tem nav-link" id="materials-menu" href="#">Gerenciar materiais</a>
+                <a class="navi-tem nav-link" id="materials-menu" href="../pages/materiais.php">Gerenciar materiais</a>
                 <a class="navi-tem nav-link" id="sell-menu" href="#">Adicionar Venda</a>
                 <a class="navi-tem nav-link" id="service-menu" href="#">Adicionar serviço</a>
                 <button type="button" class="btn btn-primary" id="sair">
