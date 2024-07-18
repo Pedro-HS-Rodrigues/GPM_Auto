@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once '../connection/conect.php';
 
 $sql = "SELECT id, nome_prod, tipo, qntd FROM estoque";
