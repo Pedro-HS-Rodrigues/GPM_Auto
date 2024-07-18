@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once '../connection/connectCadastro.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -39,18 +44,18 @@
             <p id="cadastro-title"><strong>Cadastro</strong></p>
             <p id="cadastro-description">Insira os dados do novo Usuário</p>
         </div>
-        <form id="cadastro">
+        <form action="../connection/connectCadastro.php" method="post" id="cadastro">
             <div class="mb-3">
                 <label for="form-nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="form-user" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="form-nome" name="nome">
             </div>
             <div class="mb-3">
                 <label for="form-cargo" class="form-label">Cargo</label>
-                <input type="text" class="form-control" id="form-user" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="form-cargo" name="cargo">
             </div>
             <div class="mb-3">
                 <label for="form-nivel" class="form-label">Nível</label>
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Escolha o nível de usuário" id="form-nivel" name="nivel">
                     <option selected>Escolha o nível de usuário</option>
                     <option value="1">Admin</option>
                     <option value="2">Almoxarife</option>
@@ -59,11 +64,11 @@
             </div>
             <div class="mb-3">
                 <label for="form-user" class="form-label">User</label>
-                <input type="text" class="form-control" id="form-password">
+                <input type="text" class="form-control" id="form-username" name="username">
             </div>
             <div class="mb-3">
                 <label for="form-password" class="form-label">Senha</label>
-                <input type="text" class="form-control" id="form-password">
+                <input type="text" class="form-control" id="form-senha" name="senha">
             </div>
             <button type="submit" class="btn btn-primary" id="login-submit"><STRONG>CADASTRAR</STRONG></button>
         </form>
