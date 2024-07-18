@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once '../connection/connectMateriais.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -44,8 +49,8 @@
 <body>
     <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
     <?php include_once '../includes/navbar.php'; ?>
-    <?php include_once '../includes/modalEditar.php'; ?>
     <?php include_once '../includes/modalSaida.php'; ?>
+    <?php include_once '../includes/modalEntrada.php'; ?>
     <?php include_once '../includes/modalCadastrar.php'; ?>
 
     <div class="container" id="materiais-table">
@@ -62,20 +67,14 @@
                     </thead>
                     <tbody>
                         <?php
-                        // Exemplo de dados simulados do banco de dados
-                        $dadosDoBanco = array(
-                            array("Nome" => "Tiger Nixon", "Tipo" => "System Architect", "Quantidade" => "Edinburgh"),
-                            // Adicionar mais linhas conforme necessário
-                        );
-
                         foreach ($dadosDoBanco as $row) {
                             echo "<tr>";
-                            echo "<td>" . $row['Nome'] . "</td>";
-                            echo "<td>" . $row['Tipo'] . "</td>";
-                            echo "<td>" . $row['Quantidade'] . "</td>";
+                            echo "<td>" . htmlspecialchars($row['nome_prod']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['tipo']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['qntd']) . "</td>";
                             echo "<td>";
-                            // Botão para abrir a modal de edição
-                            echo "<button type='button' class='btn btn-primary' onclick='abrirModalEditar()'>Editar</button>";
+                            echo "<button type='button' class='btn btn-primary btn btn-success' data-id='" . htmlspecialchars($row['id']) . "' onclick='abrirModalEntrada(this)'>Entrada</button> ";
+                            echo "<button type='button' class='btn btn-primary btn btn-danger' data-id='" . htmlspecialchars($row['id']) . "' onclick='abrirModalSaida(this)'>Saída</button>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -85,30 +84,78 @@
             </div>
         </div>
         <button onclick="abrirModalCadastrar()" class="btn btn-primary" id="add-material">Adicionar novo material</button>
+        <?php
+        if (isset($_SESSION['message'])) {
+            $messageType = $_SESSION['message_type'] ?? 'info';
+            echo "<div class='alert alert-$messageType rounded mt-3' role='alert'>";
+            echo $_SESSION['message'];
+            echo "</div>";
+            unset($_SESSION['message']);
+            unset($_SESSION['message_type']);
+        }
+
+        ?>
     </div>
 
 
 
     <script src="../assets/js/datatables.js"></script>
     <script>
-        function abrirModalEditar() {
-            new bootstrap.Modal(document.getElementById('modalEditar')).show();
-        }
-
-        function abrirModalSaida() {
+        function abrirModalSaida(button) {
+            const id = button.getAttribute('data-id');
+            document.getElementById('saida-id').value = id;
             new bootstrap.Modal(document.getElementById('modalSaida')).show();
         }
 
-        function abrirModalEntrada() {
+        function salvarSaida() {
+            const id = document.getElementById('saida-id').value;
+            const quantidade = document.getElementById('saida-quantidade').value;
+
+            $.post('processarSaida.php', {
+                id,
+                quantidade
+            }, function(response) {
+                if (response.success) {
+                    alert('Saída salva com sucesso!');
+                    location.reload();
+                    alert('Erro ao salvar saída!');
+                }
+            }, 'json');
+        }
+
+        function abrirModalEntrada(button) {
+            const id = button.getAttribute('data-id');
+            document.getElementById('entrada-id').value = id;
             new bootstrap.Modal(document.getElementById('modalEntrada')).show();
         }
 
+        function salvarEntrada() {
+            const id = document.getElementById('entrada-id').value;
+            const quantidade = document.getElementById('entrada-quantidade').value;
+
+            $.post('processarEntrada.php', {
+                id,
+                quantidade
+            }, function(response) {
+                if (response.success) {
+                    alert('Entrada salva com sucesso!');
+                    location.reload();
+                } else {
+                    alert('Erro ao salvar entrada!');
+                }
+            }, 'json');
+        }
         function abrirModalCadastrar() {
             new bootstrap.Modal(document.getElementById('modalCadastrar')).show();
         }
 
-        document.getElementById('modalSaida').addEventListener('hidden.bs.modal', function() {
-            document.getElementById('saida-quantidade').value = '';
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById('modalEntrada');
+            modal.addEventListener('hidden.bs.modal', function(event) {
+                var form = document.getElementById('formEntrada');
+
+                form.reset();
+            });
         });
     </script>
 </body>

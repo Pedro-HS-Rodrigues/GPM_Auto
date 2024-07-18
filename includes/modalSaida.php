@@ -6,16 +6,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="formSaida" action="../connection/connectBaixa.php" method="post">
+                    <input type="hidden" id="saida-id" name="id">
                     <div class="mb-3">
                         <label for="saida-quantidade" class="col-form-label">Quantas unidades foram vendidas ou descartadas?</label>
-                        <input type="number" class="form-control" id="saida-quantidade">
+                        <input type="number" class="form-control" id="saida-quantidade" name="quantidade" required>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Salvar alterações</button>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('formSaida').submit()">Salvar alterações</button>
             </div>
         </div>
     </div>

@@ -67,12 +67,10 @@
                     </thead>
                     <tbody>
                         <?php
-                        // Exemplo de dados simulados do banco de dados
                         $dadosDoBanco = array(
                             array("Cliente" => "João Silva", "Mecânico" => "Carlos Souza", "Data" => "2023-07-18", "Serviço" => "Troca de óleo", "Produto" => "Óleo 10W40", "Quantidade" => "1"),
                             array("Cliente" => "Maria Santos", "Mecânico" => "Ana Oliveira", "Data" => "2023-07-20", "Serviço" => "Revisão de freios", "Produto" => "Pastilhas de freio", "Quantidade" => "2"),
                             array("Cliente" => "Pedro Ferreira", "Mecânico" => "Rafael Costa", "Data" => "2023-07-22", "Serviço" => "Troca de pneus", "Produto" => "Pneu Aro 15", "Quantidade" => "4"),
-                            // Adicionar mais linhas conforme necessário
                         );
 
                         foreach ($dadosDoBanco as $row) {
@@ -84,7 +82,6 @@
                             echo "<td>" . $row['Produto'] . "</td>";
                             echo "<td>" . $row['Quantidade'] . "</td>";
                             echo "<td>";
-                            // Botão para abrir a modal de edição
                             echo "<input type='checkbox' class='form-check-input' />";
                             echo "</td>";
                             echo "</tr>";
@@ -103,16 +100,12 @@
     <script src="../assets/js/checkbox.js"></script>
     <script>
         $(document).ready(function () {
-            // Função para abrir a modal com os dados selecionados
             function abrirModalSelecionado() {
                 var modalBody = $('#modalSelecionado .modal-body');
-                modalBody.empty(); // Limpa o conteúdo anterior da modal
+                modalBody.empty();
 
-                // Itera sobre as linhas da tabela
                 $('#materiais tbody tr').each(function () {
-                    // Verifica se o checkbox da linha está marcado
                     if ($(this).find('input[type="checkbox"]').prop('checked')) {
-                        // Obtém os dados da linha
                         var cliente = $(this).find('td:eq(0)').text();
                         var mecanico = $(this).find('td:eq(1)').text();
                         var data = $(this).find('td:eq(2)').text();
@@ -120,7 +113,6 @@
                         var produto = $(this).find('td:eq(4)').text();
                         var quantidade = $(this).find('td:eq(5)').text();
 
-                        // Adiciona os dados na modal
                         modalBody.append(
                             '<p><strong>Cliente:</strong> ' + cliente + '</p>' +
                             '<p><strong>Mecânico:</strong> ' + mecanico + '</p>' +
@@ -132,8 +124,6 @@
                         );
                     }
                 });
-
-                // Mostra a modal
                 new bootstrap.Modal(document.getElementById('modalSelecionado')).show();
             }
 
