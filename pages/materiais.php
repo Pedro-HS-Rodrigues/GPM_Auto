@@ -91,27 +91,25 @@
 
     <script src="../assets/js/datatables.js"></script>
     <script>
-    
-    function abrirModalEditar(){
-    new bootstrap.Modal(document.getElementById('modalEditar')).show();
-    }
+        function abrirModalEditar() {
+            new bootstrap.Modal(document.getElementById('modalEditar')).show();
+        }
 
-    function abrirModalSaida(){
-    new bootstrap.Modal(document.getElementById('modalSaida')).show();
-    }
+        function abrirModalSaida() {
+            new bootstrap.Modal(document.getElementById('modalSaida')).show();
+        }
 
-    function abrirModalEntrada(){
-    new bootstrap.Modal(document.getElementById('modalEntrada')).show();
-    }
+        function abrirModalEntrada() {
+            new bootstrap.Modal(document.getElementById('modalEntrada')).show();
+        }
 
-    function abrirModalCadastrar(){
-    new bootstrap.Modal(document.getElementById('modalCadastrar')).show();
-    }
+        function abrirModalCadastrar() {
+            new bootstrap.Modal(document.getElementById('modalCadastrar')).show();
+        }
 
-    document.getElementById('modalSaida').addEventListener('hidden.bs.modal', function () {
-        document.getElementById('saida-quantidade').value = '';
-    });
-
+        document.getElementById('modalSaida').addEventListener('hidden.bs.modal', function() {
+            document.getElementById('saida-quantidade').value = '';
+        });
     </script>
 </body>
 
