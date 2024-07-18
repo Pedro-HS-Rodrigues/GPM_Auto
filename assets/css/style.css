@@ -136,7 +136,7 @@ p, li {
 #logo-form{
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza verticalmente */
+    justify-content: center;
     align-items: center
 }
 #login-title{
@@ -180,7 +180,7 @@ p, li {
 #cadastro-form{
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza verticalmente */
+    justify-content: center;
     align-items: center
 }
 #cadastro-title{
@@ -193,7 +193,7 @@ p, li {
     padding-top: 96px;
     align-items: center;
     background-color: #FFF;
-    position: absolute;
+    position: absolurete;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
