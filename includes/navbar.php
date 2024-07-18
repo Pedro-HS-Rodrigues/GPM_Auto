@@ -13,7 +13,7 @@
                 <a class="navi-tem nav-link" id="add-menu" href="../pages/cadastro.php">Adicionar usuário</a>
                 <a class="navi-tem nav-link" id="materials-menu" href="../pages/materiais.php">Gerenciar materiais</a>
                 <a class="navi-tem nav-link" id="sell-menu" href="#">Adicionar Venda</a>
-                <a class="navi-tem nav-link" id="service-menu" href="#">Adicionar serviço</a>
+                <a class="navi-tem nav-link" id="service-menu" href="../pages/servico.php">Adicionar serviço</a>
                 <button type="button" class="btn btn-primary" id="sair">
                     <img src="../assets/img/icon.svg" alt="out">Sair 
                 </button>
