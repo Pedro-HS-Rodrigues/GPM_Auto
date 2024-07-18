@@ -149,6 +149,7 @@ p, li {
 }
 #login-submit{
     width: 100%;
+    padding-bottom: 10px;
 }
 
 /*Materiais*/
@@ -230,6 +231,11 @@ p, li {
 }
 #cadastro-submit{
     width: 100%;
+    padding-bottom: 10px;
 }
 
 /*Serviço*/
+#alerta-login{
+    border-radius: 7px;
+    margin-top: 10px;
+}
