@@ -1,4 +1,3 @@
-<!-- Modal Entrada -->
 <div class="modal fade" id="modalEntrada" tabindex="-1" aria-labelledby="modalEntrada" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
