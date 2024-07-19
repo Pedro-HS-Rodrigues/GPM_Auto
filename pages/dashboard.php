@@ -34,7 +34,7 @@
     <div>
         <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php")?>
         <?php include_once '../includes/navbar.php'; ?>
-        <img src="../assets/img/dashboard.jpg" alt="" class="img-cover" id="dashboard-image">
+        <img src="../assets/img/dashboard.jpg" alt="" class="img-cover h-100" id="dashboard-image">
         <?php include_once '../includes/footer.php'; ?>
     </div>
 </body>

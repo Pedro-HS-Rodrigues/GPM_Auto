@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once '../connection/conect.php';
 
 if (isset($_POST['nome'], $_POST['cargo'], $_POST['nivel'], $_POST['username'], $_POST['senha'])) {
