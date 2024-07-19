@@ -89,7 +89,6 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
                     echo "<div class='alert alert-$messageType rounded mt-3' role='alert'>";
                     echo $_SESSION['message'];
                     echo "</div>";
-                    // Limpa as variáveis de mensagem após exibição
                     unset($_SESSION['message']);
                     unset($_SESSION['message_type']);
                 }
