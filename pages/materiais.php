@@ -1,7 +1,13 @@
 <?php
+// Inicia a sessão para acessar variáveis de sessão
 session_start();
+
+// Inclui o arquivo de conexão ao banco de dados para materiais
 include_once '../connection/connectMateriais.php';
+
+// Verifica se o usuário tem nível de acesso adequado
 if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
+    // Exibe mensagem de acesso não autorizado e redireciona para o dashboard
     echo "<script>alert('Acesso não autorizado!'); window.location.href = '../pages/dashboard.php';</script>";
     exit();
 }
@@ -17,7 +23,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
 
     <link rel="icon" href="../assets/img/logo.svg" type="image/x-icon">
 
-    <!-- Adicionando o BootStrap 5 -->
+    <!-- Adicionando o Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- Adicionando a fonte do projeto -->
@@ -51,8 +57,11 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
 </head>
 
 <body>
+    <!-- Define a página atual para uso na barra de navegação -->
     <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
+    <!-- Inclui a barra de navegação -->
     <?php include_once '../includes/navbar.php'; ?>
+    <!-- Inclui modais -->
     <?php include_once '../includes/modalSaida.php'; ?>
     <?php include_once '../includes/modalEntrada.php'; ?>
     <?php include_once '../includes/modalCadastrar.php'; ?>
@@ -60,6 +69,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
     <div class="container" id="materiais-table">
         <div class=" ">
             <div class="table-container">
+                <!-- Tabela de materiais -->
                 <table id="materiais" class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -71,12 +81,14 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
                     </thead>
                     <tbody>
                         <?php
+                        // Itera sobre os dados do banco e exibe na tabela
                         foreach ($dadosDoBanco as $row) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['nome_prod']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['tipo']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['qntd']) . "</td>";
                             echo "<td>";
+                            // Botões para entrada e saída de materiais
                             echo "<button type='button' class='btn btn-primary btn btn-success' data-id='" . htmlspecialchars($row['id']) . "' onclick='abrirModalEntrada(this)'>Entrada</button> ";
                             echo "<button type='button' class='btn btn-primary btn btn-danger' data-id='" . htmlspecialchars($row['id']) . "' onclick='abrirModalSaida(this)'>Saída</button>";
                             echo "</td>";
@@ -87,8 +99,10 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
                 </table>
             </div>
         </div>
+        <!-- Botão para adicionar novo material -->
         <button onclick="abrirModalCadastrar()" class="btn btn-primary" id="add-material">Adicionar novo material</button>
         <?php
+        // Exibe mensagem de sucesso ou erro, se houver
         if (isset($_SESSION['message'])) {
             $messageType = $_SESSION['message_type'] ?? 'info';
             echo "<div class='alert alert-$messageType rounded mt-3' role='alert'>";
@@ -97,20 +111,20 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
             unset($_SESSION['message']);
             unset($_SESSION['message_type']);
         }
-
         ?>
     </div>
 
-
-
+    <!-- Scripts adicionais -->
     <script src="../assets/js/datatables.js"></script>
     <script>
+        // Função para abrir modal de saída
         function abrirModalSaida(button) {
             const id = button.getAttribute('data-id');
             document.getElementById('saida-id').value = id;
             new bootstrap.Modal(document.getElementById('modalSaida')).show();
         }
 
+        // Função para salvar saída de material
         function salvarSaida() {
             const id = document.getElementById('saida-id').value;
             const quantidade = document.getElementById('saida-quantidade').value;
@@ -122,17 +136,20 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
                 if (response.success) {
                     alert('Saída salva com sucesso!');
                     location.reload();
+                } else {
                     alert('Erro ao salvar saída!');
                 }
             }, 'json');
         }
 
+        // Função para abrir modal de entrada
         function abrirModalEntrada(button) {
             const id = button.getAttribute('data-id');
             document.getElementById('entrada-id').value = id;
             new bootstrap.Modal(document.getElementById('modalEntrada')).show();
         }
 
+        // Função para salvar entrada de material
         function salvarEntrada() {
             const id = document.getElementById('entrada-id').value;
             const quantidade = document.getElementById('entrada-quantidade').value;
@@ -149,15 +166,17 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
                 }
             }, 'json');
         }
+
+        // Função para abrir modal de cadastro de material
         function abrirModalCadastrar() {
             new bootstrap.Modal(document.getElementById('modalCadastrar')).show();
         }
 
+        // Reseta o formulário de entrada quando o modal é fechado
         document.addEventListener('DOMContentLoaded', function() {
             var modal = document.getElementById('modalEntrada');
             modal.addEventListener('hidden.bs.modal', function(event) {
                 var form = document.getElementById('formEntrada');
-
                 form.reset();
             });
         });
