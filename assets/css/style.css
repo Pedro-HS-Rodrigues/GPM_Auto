@@ -1,0 +1,245 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f0f0f0;
+
+}
+#dashboard-body{
+    overflow: hidden;
+}
+
+header, .navbar{
+    background-color: #20263F;
+}
+  
+p, li {
+    color: #444;
+    font-size: 14px;
+}
+
+#nav-container {
+    padding-top: 0;
+    padding-bottom: 0;
+
+}
+
+
+#logo{
+    width: 58.39px;
+    height: 62.24px;
+    margin-right: 15px;
+}
+
+.row {
+    margin: 0;
+}
+
+.navbar-brand {
+    padding: 0;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand .brand-text {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.navbar-brand:hover{
+    color: #FFF;
+}
+
+#navbar-links a{
+    color: #FFF;
+}
+
+#navbar-links #sair{
+    margin-left: 10px;
+    background-color: #0D6EFD;
+    border-radius: 7px;
+    
+}
+
+.navbar-expand-lg .navbar-nav .navbar-link {
+    padding: 1rem .8rem;
+}
+  
+#nav-container .navbar {
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+.navbar-nav .btn-primary img {
+    margin-right: 8px;
+}
+
+.full-height {
+    height: 100%;
+    overflow: hidden;
+}
+.img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#page-footer footer{
+    background-color: #20263F;
+}
+#page-footer p{
+    color: #FFF;
+}
+
+#social-icons {
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+#info{
+    padding-left: 70px;
+}
+
+.social-icon {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+.social-icon:last-child {
+    margin-right: 0;
+}
+
+#login-form {
+    padding-top: 96px;
+    align-items: center;
+    background-color: #FFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 60px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 60px;
+    border-radius: 20px;
+}
+
+#form-icon{
+    background: linear-gradient(to bottom right, #3D466E, #030612);
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 13px;
+}
+
+#logo-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+#login-title{
+    font-size: 32px;
+    color: #212529;
+}
+#login-description{
+    font-size: 15px;
+    color: #6C757D;
+}
+#login-submit{
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+/*Materiais*/
+
+.table-container{
+    margin-top: 96px;
+
+}
+
+#editar-button{
+    color: #0D6EFD;
+}
+
+#add-material{
+    padding-top: 10px;
+}
+
+#materiais{
+    border: 2px solid #CDCDCD;
+}
+
+.table-bordered{
+    border-radius: 12px;
+}
+
+/*Cadastro*/
+
+#cadastro-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+#cadastro-title{
+    font-size: 22px;
+    color: #212529;
+    align-items: center;
+}
+
+#cadastro-form {
+    padding-top: 96px;
+    align-items: center;
+    background-color: #FFF;
+    position: absolurete;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 60px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 60px;
+    border-radius: 20px;
+
+}
+
+#logo-cadastro{
+    padding-top: 60px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+#cadastro{
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+#cadastro-icon{
+    background: linear-gradient(to bottom right, #3D466E, #030612);
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    padding: 13px;
+}
+
+#cadastro-description{
+    font-size: 15px;
+    color: #6C757D;
+}
+#cadastro-submit{
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+/*Serviço*/
+#alerta-login{
+    border-radius: 7px;
+    margin-top: 10px;
+}
+
+.mt-custom{
+    margin-top: 100px;
+}
