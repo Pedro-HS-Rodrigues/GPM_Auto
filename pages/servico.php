@@ -1,6 +1,10 @@
 <?php
 session_start();
 include_once '../connection/connectServico.php';
+if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSION['user_level'] != 3)) {
+    echo "<script>alert('Acesso não autorizado!'); window.location.href = '../pages/dashboard.php';</script>";
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +44,9 @@ include_once '../connection/connectServico.php';
                         <th>Serviço</th>
                         <th>Produto</th>
                         <th>Quantidade</th>
+                        <?php if ($_SESSION['user_level'] == 1): ?>
                         <th>Ação</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,17 +57,21 @@ include_once '../connection/connectServico.php';
                             <td><?php echo htmlspecialchars($row['Serviço']); ?></td>
                             <td><?php echo htmlspecialchars($row['Produto']); ?></td>
                             <td><?php echo htmlspecialchars($row['Quantidade']); ?></td>
+                            <?php if ($_SESSION['user_level'] == 1): ?>
                             <td>
                                 <input type='checkbox' class='form-check-input' />
                             </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
         <button onclick="abrirModalCadastrarServico()" class="btn btn-primary" id="novo-servico"><i class="bi bi-plus-circle-fill me-2"></i>Novo serviço</button>
-        <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
-        <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
+        <?php if ($_SESSION['user_level'] == 1): ?>
+            <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
+            <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
+        <?php endif; ?>
     </div>
 
     <script src="../assets/js/datatables.js"></script>

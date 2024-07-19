@@ -64,7 +64,7 @@ if ($resultMecanicos->num_rows > 0) {
     }
 }
 
-$sqlProdutos = "SELECT id, nome_prod FROM estoque";
+$sqlProdutos = "SELECT id, nome_prod FROM estoque WHERE qntd > 0";
 $resultProdutos = $conn->query($sqlProdutos);
 if (!$resultProdutos) {
     die("Erro na consulta de produtos: " . $conn->error);
@@ -77,7 +77,6 @@ if ($resultProdutos->num_rows > 0) {
 }
 
 $dadosDoBanco = $dadosDoBanco; 
-
 
 $conn->close();
 ?>
