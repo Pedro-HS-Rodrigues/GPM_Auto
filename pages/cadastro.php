@@ -53,7 +53,8 @@ include_once '../connection/connectCadastro.php';
                             <option selected>Escolha o nível de usuário</option>
                             <option value="1">Admin</option>
                             <option value="2">Almoxarife</option>
-                            <option value="3">Vendedor/Mecânico</option>
+                            <option value="3">Mecânico</option>
+                            <option value="4">Vendedor</option>
                         </select>
                     </div>
                     <div class="mb-3">
