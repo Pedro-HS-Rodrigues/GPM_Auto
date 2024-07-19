@@ -1,6 +1,4 @@
 <?php
-// Inicia a sessão para acessar variáveis de sessão
-session_start();
 
 // Inclui o arquivo de conexão ao banco de dados para login
 include_once '../connection/connectLogin.php';
