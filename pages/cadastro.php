@@ -31,6 +31,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
 
     <!--Adicionando os icones do projeto-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpXQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
+    
 </head>
 
 <body>
@@ -38,7 +39,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
     <?php include_once '../includes/navbar.php'; ?>
 
     <div class="container mt-5">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-custom">
             <div class="col-md-8">
                 <form action="../connection/connectCadastro.php" method="post" id="cadastro" class="bg-light p-4 rounded">
                     <p id="cadastro-title"><strong>Cadastro</strong></p>
