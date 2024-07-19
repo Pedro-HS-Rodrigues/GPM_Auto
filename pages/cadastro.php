@@ -1,6 +1,10 @@
 <?php
 session_start();
 include_once '../connection/connectCadastro.php';
+if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
+    echo "<script>alert('Acesso não autorizado!'); window.location.href = '../pages/dashboard.php';</script>";
+    exit();
+}
 ?>
 
 <!DOCTYPE html>

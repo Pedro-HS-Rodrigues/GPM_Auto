@@ -1,6 +1,10 @@
 <?php
 session_start();
 include_once '../connection/connectVendas.php';
+if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSION['user_level'] != 4)) {
+    echo "<script>alert('Acesso não autorizado!'); window.location.href = '../pages/dashboard.php';</script>";
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +19,7 @@ include_once '../connection/connectVendas.php';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpXQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
@@ -39,7 +43,9 @@ include_once '../connection/connectVendas.php';
                         <th>Data</th>
                         <th>Produto</th>
                         <th>Quantidade</th>
+                        <?php if ($_SESSION['user_level'] == 1): ?>
                         <th>Ação</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,17 +55,21 @@ include_once '../connection/connectVendas.php';
                             <td><?php echo htmlspecialchars($row['Data']); ?></td>
                             <td><?php echo htmlspecialchars($row['Produto']); ?></td>
                             <td><?php echo htmlspecialchars($row['Quantidade']); ?></td>
+                            <?php if ($_SESSION['user_level'] == 1): ?>
                             <td>
                                 <input type='checkbox' class='form-check-input' />
                             </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
         <button onclick="abrirModalCadastrarVenda()" class="btn btn-primary" id="nova-venda"><i class="bi bi-plus-circle-fill me-2"></i>Nova venda</button>
-        <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
-        <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
+        <?php if ($_SESSION['user_level'] == 1): ?>
+            <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
+            <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
+        <?php endif; ?>
     </div>
 
     <script src="../assets/js/datatables.js"></script>

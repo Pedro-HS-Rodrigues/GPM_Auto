@@ -1,6 +1,10 @@
 <?php
 session_start();
 include_once '../connection/connectLogin.php';
+if (isset($_SESSION['user_id'])) {
+    header("Location: ../pages/dashboard.php");
+    exit();
+}
 ?>
 
 
