@@ -1,7 +1,13 @@
 <?php
+// Inicia a sessão
 session_start();
+
+// Inclui o arquivo de conexão com o banco de dados
 include_once '../connection/connectVendas.php';
+
+// Verifica se o usuário tem o nível de acesso necessário (1 ou 4)
 if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSION['user_level'] != 4)) {
+    // Se o usuário não tiver acesso autorizado, exibe uma mensagem de alerta e redireciona para o dashboard
     echo "<script>alert('Acesso não autorizado!'); window.location.href = '../pages/dashboard.php';</script>";
     exit();
 }
@@ -28,8 +34,13 @@ if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSIO
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 <body>
+    <!-- Define a página atual -->
     <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
+
+    <!-- Inclui a barra de navegação -->
     <?php include_once '../includes/navbar.php'; ?>
+
+    <!-- Inclui modais -->
     <?php include_once '../includes/modalRelatorio.php'; ?>
     <?php include_once '../includes/modalRelatorioCompleto.php'; ?>
     <?php include_once '../includes/modalCadastrarVenda.php'; ?>
@@ -49,6 +60,7 @@ if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSIO
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Exibe os dados do banco de dados na tabela -->
                     <?php foreach ($dadosDoBanco as $row): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($row['Vendedor']); ?></td>
@@ -65,6 +77,7 @@ if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSIO
                 </tbody>
             </table>
         </div>
+        <!-- Botões para adicionar nova venda e gerar relatórios -->
         <button onclick="abrirModalCadastrarVenda()" class="btn btn-primary" id="nova-venda"><i class="bi bi-plus-circle-fill me-2"></i>Nova venda</button>
         <?php if ($_SESSION['user_level'] == 1): ?>
             <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
@@ -76,16 +89,19 @@ if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSIO
     <script src="../assets/js/checkbox.js"></script>
     <script>
         $(document).ready(function () {
+            // Inicializa a tabela com DataTables
             $('#vendas').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
                 }
             });
 
+            // Função para abrir o modal com os dados selecionados
             function abrirModalSelecionado() {
                 var modalBody = $('#modalSelecionado .modal-body');
                 modalBody.empty();
 
+                // Adiciona os dados selecionados ao modal
                 $('#vendas tbody tr').each(function () {
                     if ($(this).find('input[type="checkbox"]').prop('checked')) {
                         var vendedor = $(this).find('td:eq(0)').text();
@@ -102,14 +118,17 @@ if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSIO
                         );
                     }
                 });
+                // Mostra o modal
                 new bootstrap.Modal(document.getElementById('modalSelecionado')).show();
             }
 
+            // Evento de clique para o botão de relatório selecionado
             $('#relatorio-selecionado').on('click', function () {
                 abrirModalSelecionado();
             });
         });
 
+        // Função para abrir o modal de cadastrar venda
         function abrirModalCadastrarVenda() {
             new bootstrap.Modal(document.getElementById('modalCadastrarVenda')).show();
         }

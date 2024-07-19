@@ -25,6 +25,10 @@ include_once '../connection/connectServico.php';
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label for="dataVenda" class="form-label">Data</label>
+                        <input type="date" class="form-control" id="dataVenda" name="data" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="selectServico" class="form-label">Serviço</label>
                         <input type="text" class="form-control" id="selectServico" name="servico" required>
                     </div>
