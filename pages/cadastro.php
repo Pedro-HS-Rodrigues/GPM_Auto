@@ -1,7 +1,13 @@
 <?php
+// Inicia a sessão para acessar variáveis de sessão
 session_start();
+
+// Inclui o arquivo de conexão ao banco de dados
 include_once '../connection/connectCadastro.php';
+
+// Verifica se o usuário está autenticado e se tem o nível de acesso 1 (Admin)
 if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
+    // Exibe um alerta e redireciona o usuário para a página de dashboard se não tiver acesso autorizado
     echo "<script>alert('Acesso não autorizado!'); window.location.href = '../pages/dashboard.php';</script>";
     exit();
 }
@@ -16,31 +22,34 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
     <title>GPM Auto</title>
     <link rel="icon" href="../assets/img/logo.svg" type="image/x-icon">
 
-    <!--Adicionando o BootStrap 5-->
+    <!-- Adicionando o Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+    <!-- Adicionando os ícones do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!--Adicionando a fonte do projeto-->
+    <!-- Adicionando a fonte do projeto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <!--Adicionando a folha de estilo do projeto-->
+    <!-- Adicionando a folha de estilo do projeto -->
     <link rel="stylesheet" href="../assets/css/style.css">
 
-    <!--Adicionando os icones do projeto-->
+    <!-- Adicionando os ícones do projeto -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpXQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
-    
 </head>
 
 <body>
+    <!-- Define a página atual para uso na barra de navegação -->
     <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
+    <!-- Inclui a barra de navegação -->
     <?php include_once '../includes/navbar.php'; ?>
 
     <div class="container mt-5">
         <div class="row justify-content-center mt-custom">
             <div class="col-md-8">
+                <!-- Formulário de cadastro de novo usuário -->
                 <form action="../connection/connectCadastro.php" method="post" id="cadastro" class="bg-light p-4 rounded">
                     <p id="cadastro-title"><strong>Cadastro</strong></p>
                     <p id="cadastro-description">Insira os dados do novo Usuário</p>
@@ -72,12 +81,15 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
                     </div>
                     <button type="submit" class="btn btn-primary" id="login-submit"><strong>CADASTRAR</strong></button>
                 </form>
+
+                <!-- Exibe mensagem de sucesso ou erro, se houver -->
                 <?php
                 if (isset($_SESSION['message'])) {
                     $messageType = $_SESSION['message_type'] ?? 'info';
                     echo "<div class='alert alert-$messageType rounded mt-3' role='alert'>";
                     echo $_SESSION['message'];
                     echo "</div>";
+                    // Limpa as variáveis de mensagem após exibição
                     unset($_SESSION['message']);
                     unset($_SESSION['message_type']);
                 }
