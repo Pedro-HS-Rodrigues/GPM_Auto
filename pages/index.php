@@ -43,7 +43,7 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body>
+<body id="login-body">
     <!-- Define a página atual para uso na barra de navegação -->
     <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
     <!-- Inclui a barra de navegação -->

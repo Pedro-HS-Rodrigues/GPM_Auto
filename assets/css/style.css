@@ -10,7 +10,6 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
 #materiais-body{
     margin-top: 20px;
     margin-bottom: 20px;
@@ -120,13 +119,13 @@ p, li {
 
 #login-form {
     margin-top: 96px;
+    margin-bottom: 96px;
     align-items: center;
     background-color: #FFF;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding-top: 60px;
     padding-left: 60px;
     padding-right: 60px;
     padding-bottom: 60px;
@@ -146,7 +145,8 @@ p, li {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    padding-top: 60px;
 }
 #login-title{
     font-size: 32px;
