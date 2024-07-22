@@ -56,7 +56,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
 
 </head>
 
-<body>
+<body id="materiais-body">
     <!-- Define a página atual para uso na barra de navegação -->
     <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
     <!-- Inclui a barra de navegação -->

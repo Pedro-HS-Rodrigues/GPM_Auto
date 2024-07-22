@@ -6,6 +6,15 @@ body {
 #dashboard-body{
     overflow: hidden;
 }
+#vendas-body{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#materiais-body{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 header, .navbar{
     background-color: #20263F;
@@ -110,7 +119,7 @@ p, li {
 }
 
 #login-form {
-    padding-top: 96px;
+    margin-top: 96px;
     align-items: center;
     background-color: #FFF;
     position: absolute;
