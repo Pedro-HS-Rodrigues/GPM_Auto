@@ -32,6 +32,10 @@ if (!isset($_SESSION['user_level']) || ($_SESSION['user_level'] != 1 && $_SESSIO
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    
+
+
 </head>
 <body id="vendas-body">
     <!-- Define a página atual -->

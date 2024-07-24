@@ -54,6 +54,8 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
 </head>
 
 <body id="materiais-body">
@@ -100,7 +102,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
             </div>
         </div>
         <!-- Botão para adicionar novo material -->
-        <button onclick="abrirModalCadastrar()" class="btn btn-primary" id="add-material">Adicionar novo material</button>
+        <button onclick="abrirModalCadastrar()" class="btn btn-primary" id="add-material"><i class="bi bi-plus-circle-fill me-2"></i>Adicionar novo material</button>
         <?php
         // Exibe mensagem de sucesso ou erro, se houver
         if (isset($_SESSION['message'])) {
