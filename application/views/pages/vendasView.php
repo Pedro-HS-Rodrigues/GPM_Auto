@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPM Auto</title>
     <link rel="icon" href="assets/img/logo.svg" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
-    
-
-
 </head>
+
 <body id="vendas-body">
     <div class="container" id="vendas-table">
         <div class="table-container">
@@ -36,74 +31,163 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Exibe os dados do banco de dados na tabela -->
-                    <!--<?php foreach ($dadosDoBanco as $row): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['Vendedor']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Data']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Produto']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Quantidade']); ?></td>
-                            <?php if ($_SESSION['user_level'] == 1): ?>
-                            <td>
-                                <input type='checkbox' class='form-check-input' />
-                            </td>
-                            <?php endif; ?>
-                        </tr>
-                    <?php endforeach; ?>-->
+                    <!-- Dados preenchidos pelo DataTables -->
                 </tbody>
             </table>
         </div>
-        <!-- Botões para adicionar nova venda e gerar relatórios -->
         <button onclick="abrirModalCadastrarVenda()" class="btn btn-primary" id="nova-venda"><i class="bi bi-plus-circle-fill me-2"></i>Nova venda</button>
+        <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
+        <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
     </div>
 
-    <script src="assets/js/datatables.js"></script>
-    <script src="assets/js/checkbox.js"></script>
     <script>
-        $(document).ready(function () {
-            // Inicializa a tabela com DataTables
-            $('#vendas').DataTable({
+        $(document).ready(function() {
+            var table = $('#vendas').DataTable({
+                "ajax": {
+                    "url": "<?php echo site_url('vendas/getVendasData'); ?>",
+                    "type": "GET",
+                    "dataSrc": ""
+                },
+                "columns": [{
+                        "data": "Vendedor"
+                    },
+                    {
+                        "data": "Data"
+                    },
+                    {
+                        "data": "Produto"
+                    },
+                    {
+                        "data": "Quantidade"
+                    },
+                    {
+                        "data": null,
+                        "defaultContent": "<input type='checkbox' class='form-check-input' />"
+                    }
+                ],
                 "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
                 }
             });
 
-            // Função para abrir o modal com os dados selecionados
-            function abrirModalSelecionado() {
-                var modalBody = $('#modalSelecionado .modal-body');
-                modalBody.empty();
+            $('#vendas tbody').on('change', 'input[type="checkbox"]', function() {
+                var anyChecked = $('#vendas input[type="checkbox"]:checked').length > 0;
+                $('#relatorio-selecionado').prop('disabled', !anyChecked);
+            });
 
-                // Adiciona os dados selecionados ao modal
-                $('#vendas tbody tr').each(function () {
-                    if ($(this).find('input[type="checkbox"]').prop('checked')) {
-                        var vendedor = $(this).find('td:eq(0)').text();
-                        var data = $(this).find('td:eq(1)').text();
-                        var produto = $(this).find('td:eq(2)').text();
-                        var quantidade = $(this).find('td:eq(3)').text();
+            $('#relatorio-completo').on('click', function() {
+                abrirModalCompleto();
+            });
 
-                        modalBody.append(
-                            '<p><strong>Vendedor:</strong> ' + vendedor + '</p>' +
-                            '<p><strong>Data:</strong> ' + data + '</p>' +
-                            '<p><strong>Produto:</strong> ' + produto + '</p>' +
-                            '<p><strong>Quantidade:</strong> ' + quantidade + '</p>' +
-                            '<hr>'
-                        );
-                    }
-                });
-                // Mostra o modal
-                new bootstrap.Modal(document.getElementById('modalSelecionado')).show();
-            }
-
-            // Evento de clique para o botão de relatório selecionado
-            $('#relatorio-selecionado').on('click', function () {
+            $('#relatorio-selecionado').on('click', function() {
                 abrirModalSelecionado();
+            });
+
+            $('.modal').on('hidden.bs.modal', function() {
+                if ($('.modal.show').length) {
+                    $('body').addClass('modal-open');
+                } else {
+                    $('body').removeClass('modal-open');
+                }
+            });
+
+            $('.modal').on('hidden.bs.modal', function() {
+                $('.modal-backdrop').remove();
             });
         });
 
-        // Função para abrir o modal de cadastrar venda
         function abrirModalCadastrarVenda() {
             new bootstrap.Modal(document.getElementById('modalCadastrarVenda')).show();
         }
+
+        function abrirModalCompleto() {
+    $.ajax({
+        url: '<?php echo site_url('vendas/getRelatorioCompleto'); ?>',
+        method: 'GET',
+        success: function(data) {
+            var stats = JSON.parse(data);
+
+            var conteudo = '<h5>Relatório Completo</h5>';
+            conteudo += '<h6>Vendas por Vendedor:</h6>';
+            conteudo += '<ul>';
+            for (var vendedor in stats.vendasPorVendedor) {
+                conteudo += '<li>' + vendedor + ': ' + stats.vendasPorVendedor[vendedor] + ' vendas</li>';
+            }
+            conteudo += '</ul>';
+
+            conteudo += '<h6>Dia com Mais Vendas:</h6>';
+            conteudo += '<p>' + stats.diaMaisVendas + '</p>';
+
+            conteudo += '<h6>Produto Mais Vendido:</h6>';
+            conteudo += '<p>' + stats.produtoMaisVendido + '</p>';
+
+            $('#modalCompleto .modal-body').html(conteudo);
+            new bootstrap.Modal(document.getElementById('modalCompleto')).show();
+        }
+    });
+}
+
+
+        function abrirModalSelecionado() {
+            var selectedData = [];
+            $('#vendas input[type="checkbox"]:checked').each(function() {
+                var row = $(this).closest('tr');
+                var data = $('#vendas').DataTable().row(row).data();
+                selectedData.push(data);
+            });
+
+            var conteudo = gerarTabela(selectedData);
+            $('#modalSelecionado .modal-body').html(conteudo);
+            new bootstrap.Modal(document.getElementById('modalSelecionado')).show();
+        }
+
+        function gerarTabela(data) {
+            var tabela = '<table class="table">';
+            tabela += '<thead><tr><th>Vendedor</th><th>Data</th><th>Produto</th><th>Quantidade</th></tr></thead><tbody>';
+            data.forEach(function(row) {
+                tabela += '<tr><td>' + row.Vendedor + '</td><td>' + row.Data + '</td><td>' + row.Produto + '</td><td>' + row.Quantidade + '</td></tr>';
+            });
+            tabela += '</tbody></table>';
+            return tabela;
+        }
     </script>
+
+    <!-- Modais -->
+    <!-- modalRelatorio -->
+    <div class="modal fade" id="modalSelecionado" tabindex="-1" aria-labelledby="modalSelecionadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSelecionadoLabel">Relatório Selecionado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo será preenchido via JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modalRelatorioCompleto -->
+    <div class="modal fade" id="modalCompleto" tabindex="-1" aria-labelledby="modalCompleto" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Tamanho Grande -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCompleto-title">Relatório completo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do relatório completo aqui -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>

@@ -1,8 +1,3 @@
-<!-- Modal para Cadastrar Venda -->
-<?php
-include_once '../connection/connectVendas.php';
-?>
-<!-- Modal para Cadastrar Venda -->
 <div class="modal fade" id="modalCadastrarVenda" tabindex="-1" aria-labelledby="modalCadastrarVendaLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -11,7 +6,7 @@ include_once '../connection/connectVendas.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="formCadastrarVenda" method="post" action="../connection/connectVendas.php">
+                <form id="formCadastrarVenda" method="post" action="<?= base_url('vendas/add_venda') ?>">
                     <div class="mb-3">
                         <label for="selectVendedor" class="form-label">Vendedor</label>
                         <select id="selectVendedor" class="form-select" name="vendedor" required>
@@ -32,8 +27,10 @@ include_once '../connection/connectVendas.php';
                         <select id="selectProduto" class="form-select" name="produto" required>
                             <option selected>Escolha o produto</option>
                             <?php foreach ($produtos as $produto): ?>
-                                <option value="<?php echo htmlspecialchars($produto['id']); ?>">
-                                    <?php echo htmlspecialchars($produto['nome_prod']); ?>
+                                <option value="<?php echo htmlspecialchars($produto['id']); ?>" 
+                                        data-estoque="<?php echo htmlspecialchars($produto['qntd']); ?>">
+                                    <?php echo htmlspecialchars($produto['nome_prod']); ?> 
+                                    (<?php echo htmlspecialchars($produto['qntd']); ?> em estoque)
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -48,3 +45,20 @@ include_once '../connection/connectVendas.php';
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById('formCadastrarVenda').addEventListener('submit', function(event) {
+    var selectProduto = document.getElementById('selectProduto');
+    var quantidadeProduto = document.getElementById('quantidadeProduto');
+    var produtoId = selectProduto.value;
+    var quantidade = parseInt(quantidadeProduto.value, 10);
+
+    // Obter a quantidade disponível do produto selecionado
+    var estoque = selectProduto.options[selectProduto.selectedIndex].dataset.estoque;
+
+    if (quantidade > estoque) {
+        event.preventDefault(); // Impede o envio do formulário
+        alert('Quantidade em estoque insuficiente.');
+    }
+});
+</script>
