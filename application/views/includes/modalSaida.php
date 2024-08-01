@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalSaida" tabindex="-1" aria-labelledby="modalSaida" aria-hidden="true">
+<div class="modal fade" id="modalSaida" tabindex="-1" aria-labelledby="modalSaidaTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,10 +6,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="formSaida" action="../connection/connectBaixa.php" method="post">
+                <form id="formSaida" action="<?= base_url('materiais/processarSaida') ?>" method="post">
                     <input type="hidden" id="saida-id" name="id">
                     <div class="mb-3">
-                        <label for="saida-quantidade" class="col-form-label">Quantas unidades foram vendidas ou descartadas?</label>
+                        <label for="saida-quantidade" class="col-form-label">Quantas unidades foram retiradas?</label>
                         <input type="number" class="form-control" id="saida-quantidade" name="quantidade" required>
                     </div>
                 </form>

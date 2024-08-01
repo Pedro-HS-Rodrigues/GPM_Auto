@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalEntrada" tabindex="-1" aria-labelledby="modalEntrada" aria-hidden="true">
+<div class="modal fade" id="modalEntrada" tabindex="-1" aria-labelledby="modalEntradaTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="formEntrada" action="../connection/connectEntrada.php" method="post">
+                <form id="formEntrada" action="<?= base_url('materiais/processarEntrada') ?>" method="post">
                     <input type="hidden" id="entrada-id" name="id">
                     <div class="mb-3">
                         <label for="entrada-quantidade" class="col-form-label">Quantas unidades foram adicionadas?</label>

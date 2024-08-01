@@ -6,7 +6,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="../connection/connectMateriaisInsert.php" method="post" id="formCadastrarMaterial">
+        <form action="<?= base_url()?>materiais/inserirMaterial" method="post" id="formCadastrarMaterial">
           <div class="mb-3">
             <label for="material-name" class="col-form-label">Nome:</label>
             <input type="text" class="form-control" id="material-name" name="nome" required>

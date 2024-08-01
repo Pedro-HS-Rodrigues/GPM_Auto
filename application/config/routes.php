@@ -59,3 +59,6 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 
 
+$route['materiais/inserirMaterial'] = 'materiais/inserirMaterial';
+
+
