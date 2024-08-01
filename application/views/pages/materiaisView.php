@@ -1,18 +1,3 @@
-<?php
-// Inicia a sessão para acessar variáveis de sessão
-session_start();
-
-// Inclui o arquivo de conexão ao banco de dados para materiais
-include_once '../connection/connectMateriais.php';
-
-// Verifica se o usuário tem nível de acesso adequado
-if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
-    // Exibe mensagem de acesso não autorizado e redireciona para o dashboard
-    echo "<script>alert('Acesso não autorizado!'); window.location.href = '../pages/dashboard.php';</script>";
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -21,7 +6,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPM Auto</title>
 
-    <link rel="icon" href="../assets/img/logo.svg" type="image/x-icon">
+    <link rel="icon" href="assets/img/logo.svg" type="image/x-icon">
 
     <!-- Adicionando o Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -32,7 +17,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <!-- Adicionando a folha de estilo do projeto -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Adicionando os ícones do projeto -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpXQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
@@ -59,14 +44,6 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
 </head>
 
 <body id="materiais-body">
-    <!-- Define a página atual para uso na barra de navegação -->
-    <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
-    <!-- Inclui a barra de navegação -->
-    <?php include_once '../includes/navbar.php'; ?>
-    <!-- Inclui modais -->
-    <?php include_once '../includes/modalSaida.php'; ?>
-    <?php include_once '../includes/modalEntrada.php'; ?>
-    <?php include_once '../includes/modalCadastrar.php'; ?>
 
     <div class="container" id="materiais-table">
         <div class=" ">
@@ -82,7 +59,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+                        <!--<?php
                         // Itera sobre os dados do banco e exibe na tabela
                         foreach ($dadosDoBanco as $row) {
                             echo "<tr>";
@@ -96,28 +73,17 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] > 2) {
                             echo "</td>";
                             echo "</tr>";
                         }
-                        ?>
+                        ?>-->
                     </tbody>
                 </table>
             </div>
         </div>
         <!-- Botão para adicionar novo material -->
         <button onclick="abrirModalCadastrar()" class="btn btn-primary" id="add-material"><i class="bi bi-plus-circle-fill me-2"></i>Adicionar novo material</button>
-        <?php
-        // Exibe mensagem de sucesso ou erro, se houver
-        if (isset($_SESSION['message'])) {
-            $messageType = $_SESSION['message_type'] ?? 'info';
-            echo "<div class='alert alert-$messageType rounded mt-3' role='alert'>";
-            echo $_SESSION['message'];
-            echo "</div>";
-            unset($_SESSION['message']);
-            unset($_SESSION['message_type']);
-        }
-        ?>
     </div>
 
     <!-- Scripts adicionais -->
-    <script src="../assets/js/datatables.js"></script>
+    <script src="assets/js/datatables.js"></script>
     <script>
         // Função para abrir modal de saída
         function abrirModalSaida(button) {

@@ -14,9 +14,9 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" id="inicio-menu" href="<?= base_url()?>dashboard">Início</a>
                     <a class="nav-item nav-link" id="add-menu" href="<?= base_url()?>cadastro">Adicionar usuário</a>
-                    <a class="nav-item nav-link" id="materials-menu" href="../pages/materiais.php">Gerenciar materiais</a>
-                    <a class="nav-item nav-link" id="sell-menu" href="../pages/vendas.php">Adicionar Venda</a>
-                    <a class="nav-item nav-link" id="service-menu" href="../pages/servico.php">Adicionar serviço</a>
+                    <a class="nav-item nav-link" id="materials-menu" href="<?= base_url()?>materiais">Gerenciar materiais</a>
+                    <a class="nav-item nav-link" id="sell-menu" href="<?= base_url()?>vendas">Adicionar Venda</a>
+                    <a class="nav-item nav-link" id="service-menu" href="<?= base_url()?>servico">Adicionar serviço</a>
                     <button type="button" class="btn btn-primary" id="sair" onclick="window.location.href='../connection/logout.php';">
                         <img src="assets/img/icon.svg" alt="out">Sair
                     </button>

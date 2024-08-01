@@ -1,16 +1,3 @@
-<?php
-
-// Inclui o arquivo de conexão ao banco de dados para login
-include_once '../connection/connectLogin.php';
-
-// Verifica se o usuário já está logado
-if (isset($_SESSION['user_id'])) {
-    // Redireciona para o dashboard se já estiver logado
-    header("Location: ../pages/dashboard.php");
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,7 +7,7 @@ if (isset($_SESSION['user_id'])) {
     <title>GPM Auto</title>
     <style>
     </style>
-    <link rel="icon" href="../assets/img/logo.svg" type="image/x-icon">
+    <link rel="icon" href="assets/img/logo.svg" type="image/x-icon">
 
     <!-- Adicionando o Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -44,11 +31,6 @@ if (isset($_SESSION['user_id'])) {
 </head>
 
 <body id="login-body">
-    <!-- Define a página atual para uso na barra de navegação -->
-    <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
-    <!-- Inclui a barra de navegação -->
-    <?php include_once '../includes/navbar.php'; ?>
-
     <div id="login-form">
         <div id="logo-form">
             <!-- Logo do formulário de login -->
