@@ -13,4 +13,22 @@ class Cadastro extends CI_Controller {
         $this->load->view('includes/navbar',  $data);
 		$this->load->view('pages/cadastroView', $data);
 	}
+
+	public function store(){
+		$this->load->model('cadastro_model');
+		$user = array(
+			"nome" => $_POST['nome'],
+			"cargo" => $_POST['cargo'],
+			"nivel" => $_POST['nivel'],
+			"username" => $_POST['username'],
+			"senha" => $_POST['senha'],
+
+
+		);
+
+		$this->cadastro_model->store($user);
+		redirect("cadastro");
+	}
+
+
 }

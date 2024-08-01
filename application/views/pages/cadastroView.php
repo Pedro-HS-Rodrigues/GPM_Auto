@@ -27,14 +27,13 @@
 
 <body>
     <!-- Define a página atual para uso na barra de navegação -->
-    <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
     <!-- Inclui a barra de navegação -->
 
     <div class="container mt-5">
         <div class="row justify-content-center mt-custom">
             <div class="col-md-8">
                 <!-- Formulário de cadastro de novo usuário -->
-                <form action="../connection/connectCadastro.php" method="post" id="cadastro" class="bg-light p-4 rounded">
+                <form action="<?= base_url()?>cadastro/store" method="post" id="cadastro" class="bg-light p-4 rounded">
                     <p id="cadastro-title"><strong>Cadastro</strong></p>
                     <p id="cadastro-description">Insira os dados do novo Usuário</p>
                     <div class="mb-3">
