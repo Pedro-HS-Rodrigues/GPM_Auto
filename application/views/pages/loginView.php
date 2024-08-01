@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <!-- Adicionando a folha de estilo do projeto -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Adicionando os ícones do projeto -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpXQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
@@ -34,12 +34,12 @@
     <div id="login-form">
         <div id="logo-form">
             <!-- Logo do formulário de login -->
-            <img src="../assets/img/logo.svg" alt="logo" id="form-icon">
+            <img src="assets/img/logo.svg" alt="logo" id="form-icon">
             <p id="login-title"><strong>Login</strong></p>
             <p id="login-description">Insira seus dados para ter acesso à plataforma</p>
         </div>
         <!-- Formulário de login -->
-        <form action="../connection/connectLogin.php" method="post">
+        <form action="<?= base_url()?>login/store" method="post">
             <div class="mb-3">
                 <label for="form-user" class="form-label">Usuário</label>
                 <input type="text" class="form-control" id="form-user" name="username" required>
@@ -65,7 +65,7 @@
         </form>
     </div>
     <!-- Script para funcionalidades adicionais de senha -->
-    <script src="../assets/js/password.js"></script>
+    <script src="assets/js/password.js"></script>
 </body>
 
 </html>
