@@ -1,18 +1,3 @@
-<?php
-// Inicia a sessão para acessar variáveis de sessão
-session_start();
-
-// Inclui o arquivo de conexão ao banco de dados
-include_once '../connection/connectCadastro.php';
-
-// Verifica se o usuário está autenticado e se tem o nível de acesso 1 (Admin)
-if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
-    // Exibe um alerta e redireciona o usuário para a página de dashboard se não tiver acesso autorizado
-    echo "<script>alert('Acesso não autorizado!'); window.location.href = '../pages/dashboard.php';</script>";
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,7 +5,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPM Auto</title>
-    <link rel="icon" href="../assets/img/logo.svg" type="image/x-icon">
+    <link rel="icon" href="assets/img/logo.svg" type="image/x-icon">
 
     <!-- Adicionando o Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -34,7 +19,7 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <!-- Adicionando a folha de estilo do projeto -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Adicionando os ícones do projeto -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpXQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
@@ -44,7 +29,6 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
     <!-- Define a página atual para uso na barra de navegação -->
     <?php $currentPage = basename($_SERVER['PHP_SELF'], ".php") ?>
     <!-- Inclui a barra de navegação -->
-    <?php include_once '../includes/navbar.php'; ?>
 
     <div class="container mt-5">
         <div class="row justify-content-center mt-custom">
@@ -83,16 +67,6 @@ if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] != 1) {
                 </form>
 
                 <!-- Exibe mensagem de sucesso ou erro, se houver -->
-                <?php
-                if (isset($_SESSION['message'])) {
-                    $messageType = $_SESSION['message_type'] ?? 'info';
-                    echo "<div class='alert alert-$messageType rounded mt-3' role='alert'>";
-                    echo $_SESSION['message'];
-                    echo "</div>";
-                    unset($_SESSION['message']);
-                    unset($_SESSION['message_type']);
-                }
-                ?>
             </div>
         </div>
     </div>
