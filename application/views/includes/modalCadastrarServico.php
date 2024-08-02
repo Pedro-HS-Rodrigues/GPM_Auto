@@ -8,6 +8,12 @@
             <div class="modal-body">
                 <form id="formCadastrarServico" method="post" action="<?= base_url()?>servico/cadastrar">
                     <div class="mb-3">
+                        <label for="placa" class="form-label">Placa do Veículo</label>
+                        <input type="text" class="form-control" id="placaInput" placeholder="Digite a placa e pressione Enter">
+                        <ul id="placasList" class="list-group mt-2"></ul>
+                        <input type="hidden" id="placas" name="placas">
+                    </div>
+                    <div class="mb-3">
                         <label for="selectMecanico" class="form-label">Mecânico</label>
                         <select id="selectMecanico" class="form-select" name="mecanico" required>
                             <option selected>Escolha o mecânico</option>
@@ -26,16 +32,16 @@
                         <label for="selectServico" class="form-label">Serviço</label>
                         <select id="selectServico" class="form-select" name="servico" required>
                             <option selected>Escolha o serviço</option>
-                            <option value="1">Troca de Óleo</option>
-                            <option value="2">Alinhamento e Balanceamento</option>
-                            <option value="3">Troca de Pastilhas de Freio</option>
-                            <option value="4">Troca de Filtro de Ar</option>
-                            <option value="5">Substituição de Velas</option>
-                            <option value="6">Inspeção de Suspensão</option>
-                            <option value="7">Troca de Bateria</option>
-                            <option value="8">Verificação de Sistema de Ar-Condicionado</option>
-                            <option value="9">Reparo de Vazamentos</option>
-                            <option value="10">Troca de Correia Dentada</option>
+                            <option value="Troca de Óleo">Troca de Óleo</option>
+                            <option value="Alinhamento e Balanceamento">Alinhamento e Balanceamento</option>
+                            <option value="Troca de Pastilhas de Freio">Troca de Pastilhas de Freio</option>
+                            <option value="Troca de Filtro de Ar">Troca de Filtro de Ar</option>
+                            <option value="Substituição de Velas">Substituição de Velas</option>
+                            <option value="Inspeção de Suspensão">Inspeção de Suspensão</option>
+                            <option value="Troca de Bateria">Troca de Bateria</option>
+                            <option value="Verificação de Sistema de Ar-Condicionado">Verificação de Sistema de Ar-Condicionado</option>
+                            <option value="Reparo de Vazamentos">Reparo de Vazamentos</option>
+                            <option value="Troca de Correia Dentada">Troca de Correia Dentada</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -63,6 +69,28 @@
 </div>
 
 <script>
+document.getElementById('placaInput').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const placa = event.target.value.trim();
+        if (placa) {
+            const placasList = document.getElementById('placasList');
+            const placasInput = document.getElementById('placas');
+            const listItem = document.createElement('li');
+            listItem.textContent = placa;
+            listItem.className = 'list-group-item';
+            placasList.appendChild(listItem);
+
+            // Adiciona placa ao campo oculto
+            const placas = placasInput.value ? placasInput.value.split(',') : [];
+            placas.push(placa);
+            placasInput.value = placas.join(',');
+
+            event.target.value = '';
+        }
+    }
+});
+;
 document.getElementById('formCadastrarServico').addEventListener('submit', function(event) {
     var selectProduto = document.getElementById('selectProduto');
     var quantidadeProduto = document.getElementById('quantidadeProduto');

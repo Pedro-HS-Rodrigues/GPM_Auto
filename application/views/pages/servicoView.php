@@ -1,3 +1,8 @@
+<?php 
+$user_nivel = $this->session->userdata('user_nivel');
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -34,8 +39,10 @@
             </table>
         </div>
         <button onclick="abrirModalCadastrarServico()" class="btn btn-primary" id="novo-servico"><i class="bi bi-plus-circle-fill me-2"></i>Novo serviço</button>
+        <?php if ($user_nivel == 1) : ?>
         <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
         <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
+        <?php endif; ?>
     </div>
 
     <script>

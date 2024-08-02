@@ -17,10 +17,13 @@ class Login extends CI_Controller {
         $usuario = $this->login_model->store($user, $password);
 
         if ($usuario) {
-            $this->session->set_userdata("logged_user", $usuario);
+            $this->session->set_userdata(array(
+                'logged_user' => $usuario,
+                'user_nivel'  => $usuario['nivel'] 
+            ));
             redirect("dashboard");
         } else {
-            // Mensagem de erro
+            
             $this->session->set_flashdata('login_error', 'Usuário não encontrado ou senha incorreta.');
             redirect('login');
         }

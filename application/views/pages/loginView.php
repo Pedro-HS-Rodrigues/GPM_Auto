@@ -1,3 +1,13 @@
+<?php
+$user_nivel = $this->session->userdata('user_nivel');
+if($user_nivel != NULL){
+    redirect('dashboard');
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 

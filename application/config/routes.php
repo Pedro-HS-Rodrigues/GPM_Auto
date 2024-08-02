@@ -55,6 +55,7 @@ $route['materiais'] = 'materiais';
 $route['vendas'] = 'vendas';
 $route['login'] = 'login';
 $route['servico'] = 'servico';
+$route['logout'] = 'logout';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 

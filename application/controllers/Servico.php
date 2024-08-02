@@ -28,19 +28,27 @@ class Servico extends CI_Controller {
     }
 
     public function cadastrar() {
-        $data = array(
-			'mecanico' => $this->input->post('mecanico'),
-			'data' => $this->input->post('data'),
-			'servico' => $this->input->post('servico'),
-			'produto' => $this->input->post('produto'),
-			'quantidade_prod' => $this->input->post('quantidade')
-		);
+        $placas = $this->input->post('placas');
+        $placasArray = explode(',', $placas);
 
-        if ($this->Servico_model->inserir_servico($data)) {
-            $this->session->set_flashdata('success', 'Serviço cadastrado com sucesso!');
-        } else {
-            $this->session->set_flashdata('error', 'Falha ao cadastrar o serviço.');
+        $data = array(
+            'mecanico' => $this->input->post('mecanico'),
+            'data' => $this->input->post('data'),
+            'servico' => $this->input->post('servico'),
+            'produto' => $this->input->post('produto'),
+            'quantidade_prod' => $this->input->post('quantidade')
+        );
+
+        foreach ($placasArray as $placa) {
+            $data['placa'] = trim($placa);
+            if (!$this->Servico_model->inserir_servico($data)) {
+                $this->session->set_flashdata('error', 'Falha ao cadastrar o serviço.');
+                redirect('servico'); // Redirecione para a página desejada
+                return;
+            }
         }
+
+        $this->session->set_flashdata('success', 'Serviço cadastrado com sucesso!');
         redirect('servico'); // Redirecione para a página desejada
     }
 }

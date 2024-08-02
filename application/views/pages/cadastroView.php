@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,31 +22,30 @@
 
     <!-- Adicionando os ícones do projeto -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpXQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous">
+
+    <!-- Adicionando jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
 <body>
-    <!-- Define a página atual para uso na barra de navegação -->
-    <!-- Inclui a barra de navegação -->
-
     <div class="container mt-5">
         <div class="row justify-content-center mt-custom">
             <div class="col-md-8">
-                <!-- Formulário de cadastro de novo usuário -->
-                <form action="<?= base_url()?>cadastro/store" method="post" id="cadastro" class="bg-light p-4 rounded">
+                <div id="message" class="alert" style="display:none;"></div>
+                <form id="cadastro" class="bg-light p-4 rounded">
                     <p id="cadastro-title"><strong>Cadastro</strong></p>
                     <p id="cadastro-description">Insira os dados do novo Usuário</p>
                     <div class="mb-3">
                         <label for="form-nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="form-nome" name="nome">
+                        <input type="text" class="form-control" id="form-nome" name="nome" required>
                     </div>
                     <div class="mb-3">
                         <label for="form-cargo" class="form-label">Cargo</label>
-                        <input type="text" class="form-control" id="form-cargo" name="cargo">
+                        <input type="text" class="form-control" id="form-cargo" name="cargo" required>
                     </div>
                     <div class="mb-3">
                         <label for="form-nivel" class="form-label">Nível</label>
-                        <select class="form-select" aria-label="Escolha o nível de usuário" id="form-nivel" name="nivel">
-                            <option selected>Escolha o nível de usuário</option>
+                        <select class="form-select" aria-label="Escolha o nível de usuário" id="form-nivel" name="nivel" required>
+                            <option value="" selected>Escolha o nível de usuário</option>
                             <option value="1">Admin</option>
                             <option value="2">Almoxarife</option>
                             <option value="3">Mecânico</option>
@@ -56,19 +54,41 @@
                     </div>
                     <div class="mb-3">
                         <label for="form-user" class="form-label">User</label>
-                        <input type="text" class="form-control" id="form-username" name="username">
+                        <input type="text" class="form-control" id="form-username" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="form-password" class="form-label">Senha</label>
-                        <input type="text" class="form-control" id="form-senha" name="senha">
+                        <input type="password" class="form-control" id="form-senha" name="senha" required>
                     </div>
                     <button type="submit" class="btn btn-primary" id="login-submit"><strong>CADASTRAR</strong></button>
                 </form>
-
-                <!-- Exibe mensagem de sucesso ou erro, se houver -->
             </div>
         </div>
     </div>
-</body>
 
+    <!-- Script para envio AJAX e exibição de mensagens -->
+    <script>
+        $(document).ready(function(){
+            $('#cadastro').on('submit', function(e){
+                e.preventDefault(); // Impede o comportamento padrão de envio do formulário
+
+                $.ajax({
+                    type: 'POST',   
+                    url: '<?= base_url() ?>cadastro/store',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#message').show().removeClass('alert-success alert-danger').addClass(response.status == 'success' ? 'alert-success' : 'alert-danger').text(response.message);
+                        if(response.status == 'success'){
+                            $('#cadastro')[0].reset(); // Limpa o formulário após sucesso
+                        }
+                    },
+                    error: function() {
+                        $('#message').show().removeClass('alert-success').addClass('alert-danger').text('Ocorreu um erro ao processar a requisição.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
 </html>

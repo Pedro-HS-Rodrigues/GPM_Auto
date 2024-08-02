@@ -9,7 +9,7 @@ class Servico_model extends CI_Model {
     }
 
     public function get_servicos() {
-        $query = $this->db->select('s.id, u.nome as Mecanico, s.data as Data, s.servico as Servico, e.nome_prod as Produto, s.quantidade_prod as Quantidade')
+        $query = $this->db->select('s.id, u.nome as Mecanico, s.data as Data, s.servico as Servico, e.nome_prod as Produto, s.quantidade_prod as Quantidade, s.placa as Placa')
                           ->from('servico s')
                           ->join('usuario u', 's.mecanico = u.id')
                           ->join('estoque e', 's.produto = e.id')
