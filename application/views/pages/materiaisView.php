@@ -44,7 +44,7 @@
             }
             $('#materiais').DataTable({
                 "ajax": {
-                    "url": "<?php echo site_url('materiais/getMateriaisData'); ?>",
+                    "url": "<?= base_url()?>materiais/getMateriaisData",
                     "type": "GET",
                     "dataSrc": ""
                 },

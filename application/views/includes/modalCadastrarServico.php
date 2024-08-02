@@ -1,8 +1,3 @@
-<!-- Modal para Cadastrar Serviço -->
-<?php
-include_once '../connection/connectServico.php';
-?>
-<!-- Modal para Cadastrar Serviço -->
 <div class="modal fade" id="modalCadastrarServico" tabindex="-1" aria-labelledby="modalCadastrarServicoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -11,13 +6,12 @@ include_once '../connection/connectServico.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="formCadastrarServico" method="post" action="../connection/connectServico.php">
+                <form id="formCadastrarServico" method="post" action="<?= base_url()?>servico/cadastrar">
                     <div class="mb-3">
                         <label for="selectMecanico" class="form-label">Mecânico</label>
                         <select id="selectMecanico" class="form-select" name="mecanico" required>
-                        <option selected>Escolha o mecânico</option>
+                            <option selected>Escolha o mecânico</option>
                             <?php foreach ($mecanicos as $mecanico): ?>
-                                
                                 <option value="<?php echo htmlspecialchars($mecanico['id']); ?>">
                                     <?php echo htmlspecialchars($mecanico['nome']); ?>
                                 </option>
@@ -30,16 +24,29 @@ include_once '../connection/connectServico.php';
                     </div>
                     <div class="mb-3">
                         <label for="selectServico" class="form-label">Serviço</label>
-                        <input type="text" class="form-control" id="selectServico" name="servico" required>
+                        <select id="selectServico" class="form-select" name="servico" required>
+                            <option selected>Escolha o serviço</option>
+                            <option value="1">Troca de Óleo</option>
+                            <option value="2">Alinhamento e Balanceamento</option>
+                            <option value="3">Troca de Pastilhas de Freio</option>
+                            <option value="4">Troca de Filtro de Ar</option>
+                            <option value="5">Substituição de Velas</option>
+                            <option value="6">Inspeção de Suspensão</option>
+                            <option value="7">Troca de Bateria</option>
+                            <option value="8">Verificação de Sistema de Ar-Condicionado</option>
+                            <option value="9">Reparo de Vazamentos</option>
+                            <option value="10">Troca de Correia Dentada</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="selectProduto" class="form-label">Produto</label>
                         <select id="selectProduto" class="form-select" name="produto" required>
-                          <option selected>Escolha o produto</option>
+                            <option selected>Escolha o produto</option>
                             <?php foreach ($produtos as $produto): ?>
-                               
-                                <option value="<?php echo htmlspecialchars($produto['id']); ?>">
-                                    <?php echo htmlspecialchars($produto['nome_prod']); ?>
+                                <option value="<?php echo htmlspecialchars($produto['id']); ?>" 
+                                        data-estoque="<?php echo htmlspecialchars($produto['qntd']); ?>">
+                                    <?php echo htmlspecialchars($produto['nome_prod']); ?> 
+                                    (<?php echo htmlspecialchars($produto['qntd']); ?> em estoque)
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -54,3 +61,19 @@ include_once '../connection/connectServico.php';
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById('formCadastrarServico').addEventListener('submit', function(event) {
+    var selectProduto = document.getElementById('selectProduto');
+    var quantidadeProduto = document.getElementById('quantidadeProduto');
+    var quantidade = parseInt(quantidadeProduto.value, 10);
+
+    // Obter a quantidade disponível do produto selecionado
+    var estoque = selectProduto.options[selectProduto.selectedIndex].dataset.estoque;
+
+    if (quantidade > estoque) {
+        event.preventDefault(); // Impede o envio do formulário
+        alert('Quantidade em estoque insuficiente.');
+    }
+});
+</script>

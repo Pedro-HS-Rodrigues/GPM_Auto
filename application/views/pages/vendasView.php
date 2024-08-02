@@ -44,7 +44,7 @@
         $(document).ready(function() {
             var table = $('#vendas').DataTable({
                 "ajax": {
-                    "url": "<?php echo site_url('vendas/getVendasData'); ?>",
+                    "url": "<?= base_url()?>vendas/getVendasData",
                     "type": "GET",
                     "dataSrc": ""
                 },
@@ -102,7 +102,7 @@
 
         function abrirModalCompleto() {
     $.ajax({
-        url: '<?php echo site_url('vendas/getRelatorioCompleto'); ?>',
+        url: '<?= base_url()?>vendas/getRelatorioCompleto',
         method: 'GET',
         success: function(data) {
             var stats = JSON.parse(data);

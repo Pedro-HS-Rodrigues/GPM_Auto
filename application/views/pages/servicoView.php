@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"> <!-- Define a codificação de caracteres -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configura a visualização para dispositivos móveis -->
-    <title>GPM Auto</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/x-icon"> <!-- Ícone da página -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- CSS do Bootstrap -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Pré-conexão com o Google Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- Pré-conexão com o Google Fonts com política de compartilhamento de recursos -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> <!-- Fonte Montserrat -->
-    <link rel="stylesheet" href="assets/css/style.css"> <!-- CSS personalizado -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMc6gYen6f3u3GpXQqIzRfl1w1vQJtVj7w2bM2X" crossorigin="anonymous"> <!-- Ícones do Font Awesome -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css"> <!-- CSS do DataTables -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script> <!-- JS do DataTables -->
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script> <!-- Tradução para português do DataTables -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> <!-- JS do Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"> <!-- Ícones do Bootstrap -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços - GPM Auto</title>
+    <link rel="icon" href="assets/img/logo.svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
-<body>
-    <div class="container" id="materiais-table">
+<body id="servico-body">
+    <div class="container" id="servico-table">
         <div class="table-container">
-            <table id="materiais" class="table table-striped table-bordered"> <!-- Tabela com classes do Bootstrap e DataTables -->
+            <table id="servicos" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Mecânico</th>
@@ -33,72 +29,147 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-                        <!--<?php foreach ($dadosDoBanco as $row): ?>  
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['Mecânico']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Data']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Serviço']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Produto']); ?></td>
-                            <td><?php echo htmlspecialchars($row['Quantidade']); ?></td>
-                            <?php if ($_SESSION['user_level'] == 1): ?>
-                            <td>
-                                <input type='checkbox' class='form-check-input' />
-                            </td>
-                            <?php endif; ?>
-                        </tr>
-                    <?php endforeach; ?>-->
-                            
+                    <!-- Dados preenchidos pelo DataTables -->
                 </tbody>
             </table>
         </div>
-        <button onclick="abrirModalCadastrarServico()" class="btn btn-primary" id="novo-servico"><i class="bi bi-plus-circle-fill me-2"></i>Novo serviço</button> <!-- Botão para abrir modal de cadastro de serviço --> <!-- Verifica se o usuário é administrador -->
-            <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button> <!-- Botão para gerar relatório completo -->
-            <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button> <!-- Botão para gerar relatório selecionado -->
+        <button onclick="abrirModalCadastrarServico()" class="btn btn-primary" id="novo-servico"><i class="bi bi-plus-circle-fill me-2"></i>Novo serviço</button>
+        <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
+        <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
     </div>
 
-    <script src="assets/js/datatables.js"></script> <!-- JS personalizado para DataTables -->
-    <script src="assets/js/checkbox.js"></script> <!-- JS personalizado para manipulação de checkboxes -->
     <script>
-        $(document).ready(function () {
-            // Função para abrir o modal com os itens selecionados
-            function abrirModalSelecionado() {
-                var modalBody = $('#modalSelecionado .modal-body'); // Seleciona o corpo do modal
-                modalBody.empty(); // Limpa o conteúdo do modal
+        $(document).ready(function() {
+            var table = $('#servicos').DataTable({
+                "ajax": {
+                    "url": "<?= base_url()?>servico/getServicosData",
+                    "type": "GET",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    { "data": "Mecanico" },
+                    { "data": "Data" },
+                    { "data": "Servico" },
+                    { "data": "Produto" },
+                    { "data": "Quantidade" },
+                    { "data": null, "defaultContent": "<input type='checkbox' class='form-check-input' />" }
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
+                }
+            });
 
-                // Itera sobre as linhas da tabela
-                $('#materiais tbody tr').each(function () {
-                    if ($(this).find('input[type="checkbox"]').prop('checked')) { // Verifica se o checkbox está marcado
-                        var mecanico = $(this).find('td:eq(0)').text(); // Obtém o nome do mecânico
-                        var data = $(this).find('td:eq(1)').text(); // Obtém a data
-                        var servico = $(this).find('td:eq(2)').text(); // Obtém o serviço
-                        var produto = $(this).find('td:eq(3)').text(); // Obtém o produto
-                        var quantidade = $(this).find('td:eq(4)').text(); // Obtém a quantidade
+            $('#servicos tbody').on('change', 'input[type="checkbox"]', function() {
+                var anyChecked = $('#servicos input[type="checkbox"]:checked').length > 0;
+                $('#relatorio-selecionado').prop('disabled', !anyChecked);
+            });
 
-                        // Adiciona as informações ao modal
-                        modalBody.append(
-                            '<p><strong>Mecânico:</strong> ' + mecanico + '</p>' +
-                            '<p><strong>Data:</strong> ' + data + '</p>' +
-                            '<p><strong>Serviço:</strong> ' + servico + '</p>' +
-                            '<p><strong>Produto:</strong> ' + produto + '</p>' +
-                            '<p><strong>Quantidade:</strong> ' + quantidade + '</p>' +
-                            '<hr>'
-                        );
-                    }
-                });
-                new bootstrap.Modal(document.getElementById('modalSelecionado')).show(); // Mostra o modal
-            }
+            $('#relatorio-completo').on('click', function() {
+                abrirModalCompleto();
+            });
 
-            // Evento de clique para o botão de relatório selecionado
-            $('#relatorio-selecionado').on('click', function () {
-                abrirModalSelecionado(); // Chama a função para abrir o modal com os itens selecionados
+            $('#relatorio-selecionado').on('click', function() {
+                abrirModalSelecionado();
+            });
+            $('.modal').on('hidden.bs.modal', function() {
+                if ($('.modal.show').length) {
+                    $('body').addClass('modal-open');
+                } else {
+                    $('body').removeClass('modal-open');
+                }
+            });
+
+            $('.modal').on('hidden.bs.modal', function() {
+                $('.modal-backdrop').remove();
             });
         });
 
-        // Função para abrir o modal de cadastro de serviço
-        function abrirModalCadastrarServico() {
-            new bootstrap.Modal(document.getElementById('modalCadastrarServico')).show(); // Mostra o modal de cadastro de serviço
+        function abrirModalCompleto() {
+            $.ajax({
+                url: '<?= base_url()?>servico/getRelatorioCompleto',
+                method: 'GET',
+                success: function(data) {
+                    var stats = JSON.parse(data);
+                    var conteudo = '<h5>Relatório Completo</h5>';
+                    conteudo += '<h6>Total de Serviços:</h6>';
+                    conteudo += '<ul>';
+                    stats.total_servicos.forEach(function(servico) {
+                        conteudo += '<li>' + servico.servico + ': ' + servico.total_servicos + ' serviços</li>';
+                    });
+                    conteudo += '</ul>';
+                    $('#modalCompleto .modal-body').html(conteudo);
+                    new bootstrap.Modal(document.getElementById('modalCompleto')).show();
+                }
+            });
         }
+
+        function abrirModalSelecionado() {
+            var selectedData = [];
+            $('#servicos input[type="checkbox"]:checked').each(function() {
+                var row = $(this).closest('tr');
+                var data = $('#servicos').DataTable().row(row).data();
+                selectedData.push(data);
+            });
+
+            var conteudo = gerarTabela(selectedData);
+            $('#modalSelecionado .modal-body').html(conteudo);
+            new bootstrap.Modal(document.getElementById('modalSelecionado')).show();
+        }
+
+        function gerarTabela(data) {
+            var tabela = '<table class="table">';
+            tabela += '<thead><tr><th>Mecânico</th><th>Data</th><th>Serviço</th><th>Produto</th><th>Quantidade</th></tr></thead><tbody>';
+            data.forEach(function(row) {
+                tabela += '<tr><td>' + row.Mecanico + '</td><td>' + row.Data + '</td><td>' + row.Servico + '</td><td>' + row.Produto + '</td><td>' + row.Quantidade + '</td></tr>';
+            });
+            tabela += '</tbody></table>';
+            return tabela;
+        }
+
+
+        function abrirModalCadastrarServico() {
+            new bootstrap.Modal(document.getElementById('modalCadastrarServico')).show();
+        }
+
+
     </script>
+
+    <!-- Modais -->
+    <!-- modalRelatorio -->
+    <div class="modal fade" id="modalSelecionado" tabindex="-1" aria-labelledby="modalSelecionadoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSelecionadoLabel">Relatório Selecionado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo será preenchido via JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modalRelatorioCompleto -->
+    <div class="modal fade" id="modalCompleto" tabindex="-1" aria-labelledby="modalCompleto" aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- Tamanho Grande -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCompletoLabel">Relatório Completo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo será preenchido via JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

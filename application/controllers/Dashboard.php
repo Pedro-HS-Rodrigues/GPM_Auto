@@ -12,5 +12,6 @@ class Dashboard extends CI_Controller {
 
         $this->load->view('includes/navbar',  $data);
 		$this->load->view('pages/dashboardView', $data);
+		$this->load->view('includes/footer',  $data);
 	}
 }
