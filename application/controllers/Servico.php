@@ -10,8 +10,8 @@ class Servico extends CI_Controller {
 
     public function index() {
         $data['currentPage'] = 'servicoView';
-        $data['mecanicos'] = $this->Servico_model->get_mecanicos(); // Certifique-se de que esta função existe e está correta
-        $data['produtos'] = $this->Servico_model->get_produtos(); // Certifique-se de que esta função existe e está correta
+        $data['mecanicos'] = $this->Servico_model->get_mecanicos();
+        $data['produtos'] = $this->Servico_model->get_produtos();
         $this->load->view('includes/modalCadastrarServico', $data);
         $this->load->view('includes/navbar', $data);
         $this->load->view('pages/servicoView', $data);
@@ -42,13 +42,12 @@ class Servico extends CI_Controller {
         foreach ($placasArray as $placa) {
             $data['placa'] = trim($placa);
             if (!$this->Servico_model->inserir_servico($data)) {
-                $this->session->set_flashdata('error', 'Falha ao cadastrar o serviço.');
-                redirect('servico'); // Redirecione para a página desejada
+                echo json_encode(['status' => 'error', 'message' => 'Falha ao cadastrar o serviço.']);
                 return;
             }
         }
 
-        $this->session->set_flashdata('success', 'Serviço cadastrado com sucesso!');
-        redirect('servico'); // Redirecione para a página desejada
+        echo json_encode(['status' => 'success', 'message' => 'Serviço cadastrado com sucesso!']);
     }
 }
+?>

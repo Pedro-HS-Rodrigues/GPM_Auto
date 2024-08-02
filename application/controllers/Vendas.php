@@ -9,11 +9,8 @@ class Vendas extends CI_Controller {
     }
 
     public function index() {
-        // Buscar dados dos vendedores e produtos
         $data['vendedores'] = $this->Vendas_model->get_vendedores();
         $data['produtos'] = $this->Vendas_model->get_produtos();
-
-        // Carregar a view com os dados
         $data['currentPage'] = 'vendasView';
         $this->load->view('includes/modalCadastrarVenda', $data);
         $this->load->view('includes/navbar', $data);
@@ -31,25 +28,19 @@ class Vendas extends CI_Controller {
         $produto = $this->input->post('produto');
         $quantidade = $this->input->post('quantidade');
 
-        // Carregar o modelo para verificar o estoque
-        $this->load->model('Vendas_model');
         $estoque = $this->Vendas_model->get_produto_estoque($produto);
 
         if ($estoque < $quantidade) {
-            // Definir uma mensagem de erro e redirecionar
-            $this->session->set_flashdata('error', 'Quantidade em estoque insuficiente.');
-            redirect('vendas');
+            echo json_encode(['status' => 'error', 'message' => 'Quantidade em estoque insuficiente.']);
             return;
         }
 
-        // Inserir a nova venda no banco de dados
-        $this->Vendas_model->insert_venda($vendedor, $data, $produto, $quantidade);
-
-        // Definir uma mensagem de sucesso e redirecionar
-        $this->session->set_flashdata('success', 'Venda registrada com sucesso!');
-        redirect('vendas');
+        if ($this->Vendas_model->insert_venda($vendedor, $data, $produto, $quantidade)) {
+            echo json_encode(['status' => 'success', 'message' => 'Venda registrada com sucesso!']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Falha ao registrar a venda.']);
+        }
     }
-
 
     public function getRelatorioCompleto() {
         $vendas = $this->Vendas_model->getVendas();
@@ -96,3 +87,4 @@ class Vendas extends CI_Controller {
         echo json_encode($result);
     }
 }
+?>

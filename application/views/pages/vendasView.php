@@ -1,8 +1,6 @@
 <?php 
 $user_nivel = $this->session->userdata('user_nivel');
 ?>
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -55,22 +53,12 @@ $user_nivel = $this->session->userdata('user_nivel');
                     "type": "GET",
                     "dataSrc": ""
                 },
-                "columns": [{
-                        "data": "Vendedor"
-                    },
-                    {
-                        "data": "Data"
-                    },
-                    {
-                        "data": "Produto"
-                    },
-                    {
-                        "data": "Quantidade"
-                    },
-                    {
-                        "data": null,
-                        "defaultContent": "<input type='checkbox' class='form-check-input' />"
-                    }
+                "columns": [
+                    { "data": "Vendedor" },
+                    { "data": "Data" },
+                    { "data": "Produto" },
+                    { "data": "Quantidade" },
+                    { "data": null, "defaultContent": "<input type='checkbox' class='form-check-input' />" }
                 ],
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
@@ -101,6 +89,27 @@ $user_nivel = $this->session->userdata('user_nivel');
             $('.modal').on('hidden.bs.modal', function() {
                 $('.modal-backdrop').remove();
             });
+
+            $('#formCadastrarVenda').on('submit', function(e) {
+                e.preventDefault(); // Impede o envio padrão do formulário
+
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url() ?>vendas/add_venda',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#modalCadastrarVenda').modal('hide'); // Fecha a modal
+                        alert(response.message); // Exibe a mensagem de sucesso ou erro
+                        if (response.status === 'success') {
+                            location.reload(); // Recarrega a página ao clicar em "OK" no alerta
+                        }
+                    },
+                    error: function() {
+                        alert('Ocorreu um erro ao registrar a venda.');
+                    }
+                });
+            });
         });
 
         function abrirModalCadastrarVenda() {
@@ -108,32 +117,31 @@ $user_nivel = $this->session->userdata('user_nivel');
         }
 
         function abrirModalCompleto() {
-    $.ajax({
-        url: '<?= base_url()?>vendas/getRelatorioCompleto',
-        method: 'GET',
-        success: function(data) {
-            var stats = JSON.parse(data);
+            $.ajax({
+                url: '<?= base_url()?>vendas/getRelatorioCompleto',
+                method: 'GET',
+                success: function(data) {
+                    var stats = JSON.parse(data);
 
-            var conteudo = '<h5>Relatório Completo</h5>';
-            conteudo += '<h6>Vendas por Vendedor:</h6>';
-            conteudo += '<ul>';
-            for (var vendedor in stats.vendasPorVendedor) {
-                conteudo += '<li>' + vendedor + ': ' + stats.vendasPorVendedor[vendedor] + ' vendas</li>';
-            }
-            conteudo += '</ul>';
+                    var conteudo = '<h5>Relatório Completo</h5>';
+                    conteudo += '<h6>Vendas por Vendedor:</h6>';
+                    conteudo += '<ul>';
+                    for (var vendedor in stats.vendasPorVendedor) {
+                        conteudo += '<li>' + vendedor + ': ' + stats.vendasPorVendedor[vendedor] + ' vendas</li>';
+                    }
+                    conteudo += '</ul>';
 
-            conteudo += '<h6>Dia com Mais Vendas:</h6>';
-            conteudo += '<p>' + stats.diaMaisVendas + '</p>';
+                    conteudo += '<h6>Dia com Mais Vendas:</h6>';
+                    conteudo += '<p>' + stats.diaMaisVendas + '</p>';
 
-            conteudo += '<h6>Produto Mais Vendido:</h6>';
-            conteudo += '<p>' + stats.produtoMaisVendido + '</p>';
+                    conteudo += '<h6>Produto Mais Vendido:</h6>';
+                    conteudo += '<p>' + stats.produtoMaisVendido + '</p>';
 
-            $('#modalCompleto .modal-body').html(conteudo);
-            new bootstrap.Modal(document.getElementById('modalCompleto')).show();
+                    $('#modalCompleto .modal-body').html(conteudo);
+                    new bootstrap.Modal(document.getElementById('modalCompleto')).show();
+                }
+            });
         }
-    });
-}
-
 
         function abrirModalSelecionado() {
             var selectedData = [];
@@ -180,21 +188,66 @@ $user_nivel = $this->session->userdata('user_nivel');
 
     <!-- modalRelatorioCompleto -->
     <div class="modal fade" id="modalCompleto" tabindex="-1" aria-labelledby="modalCompleto" aria-hidden="true">
-    <div class="modal-dialog modal-lg"> <!-- Tamanho Grande -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalCompleto-title">Relatório completo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Conteúdo do relatório completo aqui -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <div class="modal-dialog modal-lg"> <!-- Tamanho Grande -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCompleto-title">Relatório completo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Conteúdo do relatório completo aqui -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal Cadastrar Venda -->
+    <div class="modal fade" id="modalCadastrarVenda" tabindex="-1" aria-labelledby="modalCadastrarVendaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCadastrarVendaLabel">Cadastrar Venda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCadastrarVenda">
+                        <div class="mb-3">
+                            <label for="vendedor" class="form-label">Vendedor</label>
+                            <select class="form-select" id="vendedor" name="vendedor" required>
+                                <option value="">Selecione um vendedor</option>
+                                <?php foreach ($vendedores as $vendedor) : ?>
+                                    <option value="<?= $vendedor['id'] ?>"><?= $vendedor['nome'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="data" class="form-label">Data</label>
+                            <input type="date" class="form-control" id="data" name="data" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="produto" class="form-label">Produto</label>
+                            <select class="form-select" id="produto" name="produto" required>
+                                <option value="">Selecione um produto</option>
+                                <?php foreach ($produtos as $produto) : ?>
+                                    <option value="<?= $produto['id'] ?>"><?= $produto['nome_prod'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantidade" class="form-label">Quantidade</label>
+                            <input type="number" class="form-control" id="quantidade" name="quantidade" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
 </html>

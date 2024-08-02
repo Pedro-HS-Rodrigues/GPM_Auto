@@ -2,7 +2,6 @@
 $user_nivel = $this->session->userdata('user_nivel');
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -177,6 +176,85 @@ $user_nivel = $this->session->userdata('user_nivel');
             </div>
         </div>
     </div>
+
+    <!-- Modal Cadastrar Serviço -->
+    <div class="modal fade" id="modalCadastrarServico" tabindex="-1" aria-labelledby="modalCadastrarServicoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCadastrarServicoLabel">Cadastrar Serviço</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCadastrarServico">
+                        <div class="mb-3">
+                            <label for="mecanico" class="form-label">Mecânico</label>
+                            <select class="form-select" id="mecanico" name="mecanico" required>
+                                <option value="">Selecione um mecânico</option>
+                                <?php foreach ($mecanicos as $mecanico) : ?>
+                                    <option value="<?= $mecanico['id'] ?>"><?= $mecanico['nome'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="data" class="form-label">Data</label>
+                            <input type="date" class="form-control" id="data" name="data" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="servico" class="form-label">Serviço</label>
+                            <input type="text" class="form-control" id="servico" name="servico" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="produto" class="form-label">Produto</label>
+                            <select class="form-select" id="produto" name="produto" required>
+                                <option value="">Selecione um produto</option>
+                                <?php foreach ($produtos as $produto) : ?>
+                                    <option value="<?= $produto['id'] ?>"><?= $produto['nome_prod'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantidade" class="form-label">Quantidade</label>
+                            <input type="number" class="form-control" id="quantidade" name="quantidade" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="placas" class="form-label">Placas (separadas por vírgula)</label>
+                            <input type="text" class="form-control" id="placas" name="placas" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#formCadastrarServico').on('submit', function(e) {
+                e.preventDefault(); // Impede o envio padrão do formulário
+
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url() ?>servico/cadastrar',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#modalCadastrarServico').modal('hide'); // Fecha a modal
+                        alert(response.message); // Exibe a mensagem de sucesso ou erro
+                        if (response.status === 'success') {
+                            $('#servicos').DataTable().ajax.reload(); // Recarrega os dados da tabela
+                        }
+                    },
+                    error: function() {
+                        alert('Ocorreu um erro ao processar o cadastro.');
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
