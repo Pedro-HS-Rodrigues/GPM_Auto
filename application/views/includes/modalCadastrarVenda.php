@@ -56,9 +56,5 @@ document.getElementById('formCadastrarVenda').addEventListener('submit', functio
     // Obter a quantidade disponível do produto selecionado
     var estoque = selectProduto.options[selectProduto.selectedIndex].dataset.estoque;
 
-    if (quantidade > estoque) {
-        event.preventDefault(); // Impede o envio do formulário
-        alert('Quantidade em estoque insuficiente.');
-    }
 });
 </script>

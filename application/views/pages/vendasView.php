@@ -1,6 +1,7 @@
 <?php 
 $user_nivel = $this->session->userdata('user_nivel');
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,7 +9,7 @@ $user_nivel = $this->session->userdata('user_nivel');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPM Auto</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= base_url()?>assets/img/favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -18,31 +19,48 @@ $user_nivel = $this->session->userdata('user_nivel');
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Ajuste para centralizar o conteúdo */
+        
+        .container {
+            max-width: 1200px;
+            margin-top: 100px;
+        }
+    </style>
 </head>
 
 <body id="vendas-body">
-    <div class="container" id="vendas-table">
-        <div class="table-container">
-            <table id="vendas" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Vendedor</th>
-                        <th>Data</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dados preenchidos pelo DataTables -->
-                </tbody>
-            </table>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="vendas" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Vendedor</th>
+                                <th>Data</th>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados preenchidos pelo DataTables -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <button onclick="abrirModalCadastrarVenda()" class="btn btn-primary me-2" id="nova-venda"><i class="bi bi-plus-circle-fill me-2"></i>Nova venda</button>
+                    <?php if ($user_nivel == 1) : ?>
+                        <button onclick="abrirModalCompleto()" class="btn btn-primary me-2" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
+                        <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-        <button onclick="abrirModalCadastrarVenda()" class="btn btn-primary" id="nova-venda"><i class="bi bi-plus-circle-fill me-2"></i>Nova venda</button>
-        <?php if ($user_nivel == 1) : ?>
-        <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
-        <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
-        <?php endif; ?>
     </div>
 
     <script>

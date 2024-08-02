@@ -73,35 +73,27 @@ document.getElementById('placaInput').addEventListener('keypress', function(even
     if (event.key === 'Enter') {
         event.preventDefault();
         const placa = event.target.value.trim();
-        if (placa) {
+
+        if (placa) {  // Aceita qualquer formato de placa
             const placasList = document.getElementById('placasList');
             const placasInput = document.getElementById('placas');
-            const listItem = document.createElement('li');
-            listItem.textContent = placa;
-            listItem.className = 'list-group-item';
-            placasList.appendChild(listItem);
 
-            // Adiciona placa ao campo oculto
-            const placas = placasInput.value ? placasInput.value.split(',') : [];
-            placas.push(placa);
-            placasInput.value = placas.join(',');
+            // Verifica se a placa já foi inserida
+            const existingPlacas = placasInput.value ? placasInput.value.split(',') : [];
+            if (!existingPlacas.includes(placa)) {
+                const listItem = document.createElement('li');
+                listItem.textContent = placa;
+                listItem.className = 'list-group-item';
+                placasList.appendChild(listItem);
+
+                // Adiciona placa ao campo oculto
+                existingPlacas.push(placa);
+                placasInput.value = existingPlacas.join(',');
+            }
 
             event.target.value = '';
         }
     }
 });
-;
-document.getElementById('formCadastrarServico').addEventListener('submit', function(event) {
-    var selectProduto = document.getElementById('selectProduto');
-    var quantidadeProduto = document.getElementById('quantidadeProduto');
-    var quantidade = parseInt(quantidadeProduto.value, 10);
 
-    // Obter a quantidade disponível do produto selecionado
-    var estoque = selectProduto.options[selectProduto.selectedIndex].dataset.estoque;
-
-    if (quantidade > estoque) {
-        event.preventDefault(); // Impede o envio do formulário
-        alert('Quantidade em estoque insuficiente.');
-    }
-});
 </script>

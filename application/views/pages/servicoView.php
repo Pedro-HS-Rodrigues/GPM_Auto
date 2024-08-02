@@ -8,40 +8,58 @@ $user_nivel = $this->session->userdata('user_nivel');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serviços - GPM Auto</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= base_url()?>assets/img/favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Ajuste para centralizar o conteúdo */
+
+        .container {
+            max-width: 1200px;
+            margin-top: 100px;
+        }
+    </style>
 </head>
 <body id="servico-body">
-    <div class="container" id="servico-table">
-        <div class="table-container">
-            <table id="servicos" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Mecânico</th>
-                        <th>Data</th>
-                        <th>Serviço</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dados preenchidos pelo DataTables -->
-                </tbody>
-            </table>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="servicos" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mecânico</th>
+                                <th>Data</th>
+                                <th>Serviço</th>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados preenchidos pelo DataTables -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <button onclick="abrirModalCadastrarServico()" class="btn btn-primary me-2" id="novo-servico"><i class="bi bi-plus-circle-fill me-2"></i>Novo serviço</button>
+                    <?php if ($user_nivel == 1) : ?>
+                        <button onclick="abrirModalCompleto()" class="btn btn-primary me-2" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
+                        <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-        <button onclick="abrirModalCadastrarServico()" class="btn btn-primary" id="novo-servico"><i class="bi bi-plus-circle-fill me-2"></i>Novo serviço</button>
-        <?php if ($user_nivel == 1) : ?>
-        <button onclick="abrirModalCompleto()" class="btn btn-primary" id="relatorio-completo"><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório completo</button>
-        <button onclick="abrirModalSelecionado()" class="btn btn-primary" id="relatorio-selecionado" disabled><i class="bi bi-file-earmark-arrow-down-fill me-2"></i>Gerar relatório selecionado</button>
-        <?php endif; ?>
     </div>
 
     <script>
@@ -77,6 +95,7 @@ $user_nivel = $this->session->userdata('user_nivel');
             $('#relatorio-selecionado').on('click', function() {
                 abrirModalSelecionado();
             });
+
             $('.modal').on('hidden.bs.modal', function() {
                 if ($('.modal.show').length) {
                     $('body').addClass('modal-open');
@@ -87,6 +106,27 @@ $user_nivel = $this->session->userdata('user_nivel');
 
             $('.modal').on('hidden.bs.modal', function() {
                 $('.modal-backdrop').remove();
+            });
+
+            $('#formCadastrarServico').on('submit', function(e) {
+                e.preventDefault(); // Impede o envio padrão do formulário
+
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= base_url() ?>servico/cadastrar',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#modalCadastrarServico').modal('hide'); // Fecha a modal
+                        alert(response.message); // Exibe a mensagem de sucesso ou erro
+                        if (response.status === 'success') {
+                            location.reload(); // Recarrega a página ao clicar em "OK" no alerta
+                        }
+                    },
+                    error: function() {
+                        alert('Ocorreu um erro ao processar o cadastro.');
+                    }
+                });
             });
         });
 
@@ -132,12 +172,9 @@ $user_nivel = $this->session->userdata('user_nivel');
             return tabela;
         }
 
-
         function abrirModalCadastrarServico() {
             new bootstrap.Modal(document.getElementById('modalCadastrarServico')).show();
         }
-
-
     </script>
 
     <!-- Modais -->
@@ -230,31 +267,6 @@ $user_nivel = $this->session->userdata('user_nivel');
             </div>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('#formCadastrarServico').on('submit', function(e) {
-                e.preventDefault(); // Impede o envio padrão do formulário
-
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= base_url() ?>servico/cadastrar',
-                    data: $(this).serialize(),
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#modalCadastrarServico').modal('hide'); // Fecha a modal
-                        alert(response.message); // Exibe a mensagem de sucesso ou erro
-                        if (response.status === 'success') {
-                            $('#servicos').DataTable().ajax.reload(); // Recarrega os dados da tabela
-                        }
-                    },
-                    error: function() {
-                        alert('Ocorreu um erro ao processar o cadastro.');
-                    }
-                });
-            });
-        });
-    </script>
 
 </body>
 </html>

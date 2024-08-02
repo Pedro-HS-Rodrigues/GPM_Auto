@@ -30,15 +30,24 @@ class Servico extends CI_Controller {
     public function cadastrar() {
         $placas = $this->input->post('placas');
         $placasArray = explode(',', $placas);
-
+        $produtoId = $this->input->post('produto');
+        $quantidade = $this->input->post('quantidade');
+    
+        // Verifica o estoque disponível para o produto selecionado
+        $produto = $this->Servico_model->get_produto_by_id($produtoId);
+        if ($produto && $quantidade > $produto['qntd']) {
+            echo json_encode(['status' => 'error', 'message' => 'Quantidade em estoque insuficiente.']);
+            return;
+        }
+    
         $data = array(
             'mecanico' => $this->input->post('mecanico'),
             'data' => $this->input->post('data'),
             'servico' => $this->input->post('servico'),
-            'produto' => $this->input->post('produto'),
-            'quantidade_prod' => $this->input->post('quantidade')
+            'produto' => $produtoId,
+            'quantidade_prod' => $quantidade
         );
-
+    
         foreach ($placasArray as $placa) {
             $data['placa'] = trim($placa);
             if (!$this->Servico_model->inserir_servico($data)) {
@@ -46,8 +55,9 @@ class Servico extends CI_Controller {
                 return;
             }
         }
-
+    
         echo json_encode(['status' => 'success', 'message' => 'Serviço cadastrado com sucesso!']);
     }
+    
 }
 ?>
