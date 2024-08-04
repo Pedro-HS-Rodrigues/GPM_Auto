@@ -3,7 +3,7 @@ $user_nivel = $this->session->userdata('user_nivel');
 if($user_nivel != NULL){
     redirect('dashboard');
 }
-
+    error_reporting(0)
 ?>
 
 

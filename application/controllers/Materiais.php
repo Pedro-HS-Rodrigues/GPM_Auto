@@ -5,7 +5,6 @@ class Materiais extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        // Carregar a model
         $this->load->model('materiais_model');
     }
 
