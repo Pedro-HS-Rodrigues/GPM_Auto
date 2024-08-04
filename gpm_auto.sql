@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04/08/2024 às 04:09
+-- Tempo de geração: 05/08/2024 às 00:40
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -56,13 +56,13 @@ CREATE TABLE `estoque` (
 INSERT INTO `estoque` (`id`, `resp`, `nome_prod`, `tipo`, `qntd`) VALUES
 (1, NULL, 'Óleo de Motor 5W30', 'Lubrificante', 1),
 (2, NULL, 'Filtro de Óleo', 'Peça de Reposição', 0),
-(3, NULL, 'Pastilha de Freio', 'Peça de Reposição', 15),
+(3, NULL, 'Pastilha de Freio', 'Peça de Reposição', 5),
 (4, NULL, 'Velas de Ignição', 'Peça de Reposição', 0),
-(5, NULL, 'Bateria de Carro 60Ah', 'Elétrico', 0),
+(5, NULL, 'Bateria de Carro 60Ah', 'Elétrico', 3),
 (6, NULL, 'Cabo de Velas', 'Peça de Reposição', 20),
 (7, NULL, 'Correia Dentada', 'Peça de Reposição', 10),
 (8, NULL, 'Óleo de Transmissão', 'Lubrificante', 4),
-(9, NULL, 'Amortecedor Dianteiro', 'Peça de Reposição', 9),
+(9, NULL, 'Amortecedor Dianteiro', 'Peça de Reposição', 10),
 (10, NULL, 'Amortecedor Traseiro', 'Peça de Reposição', 20),
 (11, NULL, 'Kit de Embreagem', 'Peça de Reposição', 5),
 (12, NULL, 'Filtro de Ar', 'Peça de Reposição', 20),
@@ -78,6 +78,19 @@ INSERT INTO `estoque` (`id`, `resp`, `nome_prod`, `tipo`, `qntd`) VALUES
 (30, NULL, 'Caneta esferografica', 'Escrivania', 20),
 (31, NULL, 'CodeIgniter', 'CodeIgniter', 2),
 (33, NULL, 'Insercao de teste', 'Teste', 10);
+
+--
+-- Acionadores `estoque`
+--
+DELIMITER $$
+CREATE TRIGGER `check_estoque_before_update` BEFORE UPDATE ON `estoque` FOR EACH ROW BEGIN
+    IF NEW.qntd < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Quantidade no estoque não pode ser negativa';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -140,7 +153,9 @@ INSERT INTO `servico` (`id`, `mecanico`, `data`, `servico`, `produto`, `quantida
 (76, 3, '2024-08-03', 'Reparo de Vazamentos', 6, 2, ''),
 (77, 3, '2024-10-12', 'Troca de Pastilhas de Freio', 6, 3, ''),
 (78, 3, '2024-12-21', 'Troca de Filtro de Ar', 14, 10, 'PMS49392'),
-(80, 3, '2024-08-03', 'Troca de Pastilhas de Freio', 2, 20, 'PMS4939');
+(80, 3, '2024-08-03', 'Troca de Pastilhas de Freio', 2, 20, 'PMS4939'),
+(85, 18, '2024-08-03', 'Troca de Óleo', 3, 5, 'PMS4939'),
+(86, 3, '2024-08-04', 'Troca de Filtro de Ar', 9, 5, 'PMS4939');
 
 --
 -- Acionadores `servico`
@@ -246,7 +261,10 @@ INSERT INTO `venda` (`id`, `vendedor`, `data`, `produto`, `quantidade`) VALUES
 (41, 16, '2024-08-31', 8, 5),
 (42, 16, '2024-08-31', 8, 5),
 (43, 16, '2024-08-31', 6, 5),
-(44, 16, '2024-08-02', 2, 5);
+(44, 16, '2024-08-02', 2, 5),
+(45, 15, '2024-08-03', 3, 5),
+(46, 15, '2024-08-04', 5, 2),
+(47, 15, '2024-08-04', 9, 1);
 
 --
 -- Acionadores `venda`
@@ -320,7 +338,7 @@ ALTER TABLE `estoque`
 -- AUTO_INCREMENT de tabela `servico`
 --
 ALTER TABLE `servico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
@@ -332,7 +350,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `venda`
 --
 ALTER TABLE `venda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- Restrições para tabelas despejadas

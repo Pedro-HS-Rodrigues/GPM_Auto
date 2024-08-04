@@ -1,5 +1,6 @@
 <?php 
 $user_nivel = $this->session->userdata('user_nivel');
+error_reporting(0)
 ?>
 
 <!DOCTYPE html>

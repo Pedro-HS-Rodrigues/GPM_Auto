@@ -77,7 +77,6 @@ class Vendas extends CI_Controller {
         }
         $produtoMaisVendido = array_keys($vendasPorProduto, max($vendasPorProduto));
     
-        // Prepare the result
         $result = [
             'vendasPorVendedor' => $vendasPorVendedor,
             'diaMaisVendas' => $diaMaisVendas[0],

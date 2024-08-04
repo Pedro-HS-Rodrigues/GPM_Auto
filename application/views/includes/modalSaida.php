@@ -10,14 +10,45 @@
                     <input type="hidden" id="saida-id" name="id">
                     <div class="mb-3">
                         <label for="saida-quantidade" class="col-form-label">Quantas unidades foram retiradas?</label>
-                        <input type="number" class="form-control" id="saida-quantidade" name="quantidade" required>
+                        <input type="number" class="form-control" id="saida-quantidade" name="quantidade" required  min="0" step="1">
                     </div>
+                    <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" onclick="document.getElementById('formSaida').submit()">Salvar alterações</button>
+                
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('formSaida').addEventListener('submit', function(event) {
+        event.preventDefault(); // Impede o envio padrão do formulário
+
+        var form = this;
+        var formData = new FormData(form);
+
+        fetch('<?= base_url('materiais/processarSaida') ?>', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                // Atualize a interface ou redirecione conforme necessário
+                window.location.reload(); // Atualiza a página
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao processar a saída.');
+        });
+    });
+});
+</script>
