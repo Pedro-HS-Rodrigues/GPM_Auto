@@ -31,4 +31,12 @@ class Materiais_model extends CI_Model {
         $this->db->where('id', $id);
         return $this->db->update('estoque');
     }
+
+    public function getMaterialById($id) {
+        $this->db->select('qntd');
+        $this->db->from('estoque');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 }

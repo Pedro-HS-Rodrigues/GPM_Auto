@@ -55,17 +55,28 @@ class Materiais extends CI_Controller {
     }
 
     public function processarSaida() {
+        $this->output->set_content_type('application/json'); // Define o tipo de conteúdo como JSON
+    
         $id = intval($this->input->post('id'));
         $quantidade = intval($this->input->post('quantidade'));
-
-        if ($this->materiais_model->adicionarSaida($id, $quantidade)) {
-            $this->session->set_flashdata('message', 'Saída salva com sucesso!');
-            $this->session->set_flashdata('message_type', 'success');
-        } else {
-            $this->session->set_flashdata('message', 'Erro ao salvar saída!');
-            $this->session->set_flashdata('message_type', 'danger');
+    
+        $material = $this->materiais_model->getMaterialById($id);
+        if (!$material) {
+            echo json_encode(['status' => 'error', 'message' => 'Material não encontrado!']);
+            return;
         }
-
-        redirect('materiais');
+    
+        if ($quantidade > $material['qntd']) {
+            echo json_encode(['status' => 'error', 'message' => 'Quantidade solicitada é maior que a disponível!']);
+            return;
+        }
+    
+        $result = $this->materiais_model->adicionarSaida($id, $quantidade);
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Saída salva com sucesso!']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Erro ao salvar saída!']);
+        }
     }
+    
 }
