@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04/08/2024 às 04:09
+-- Tempo de geração: 04/08/2024 às 20:29
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -56,9 +56,9 @@ CREATE TABLE `estoque` (
 INSERT INTO `estoque` (`id`, `resp`, `nome_prod`, `tipo`, `qntd`) VALUES
 (1, NULL, 'Óleo de Motor 5W30', 'Lubrificante', 1),
 (2, NULL, 'Filtro de Óleo', 'Peça de Reposição', 0),
-(3, NULL, 'Pastilha de Freio', 'Peça de Reposição', 15),
+(3, NULL, 'Pastilha de Freio', 'Peça de Reposição', 5),
 (4, NULL, 'Velas de Ignição', 'Peça de Reposição', 0),
-(5, NULL, 'Bateria de Carro 60Ah', 'Elétrico', 0),
+(5, NULL, 'Bateria de Carro 60Ah', 'Elétrico', 5),
 (6, NULL, 'Cabo de Velas', 'Peça de Reposição', 20),
 (7, NULL, 'Correia Dentada', 'Peça de Reposição', 10),
 (8, NULL, 'Óleo de Transmissão', 'Lubrificante', 4),
@@ -140,7 +140,8 @@ INSERT INTO `servico` (`id`, `mecanico`, `data`, `servico`, `produto`, `quantida
 (76, 3, '2024-08-03', 'Reparo de Vazamentos', 6, 2, ''),
 (77, 3, '2024-10-12', 'Troca de Pastilhas de Freio', 6, 3, ''),
 (78, 3, '2024-12-21', 'Troca de Filtro de Ar', 14, 10, 'PMS49392'),
-(80, 3, '2024-08-03', 'Troca de Pastilhas de Freio', 2, 20, 'PMS4939');
+(80, 3, '2024-08-03', 'Troca de Pastilhas de Freio', 2, 20, 'PMS4939'),
+(85, 18, '2024-08-03', 'Troca de Óleo', 3, 5, 'PMS4939');
 
 --
 -- Acionadores `servico`
@@ -246,7 +247,8 @@ INSERT INTO `venda` (`id`, `vendedor`, `data`, `produto`, `quantidade`) VALUES
 (41, 16, '2024-08-31', 8, 5),
 (42, 16, '2024-08-31', 8, 5),
 (43, 16, '2024-08-31', 6, 5),
-(44, 16, '2024-08-02', 2, 5);
+(44, 16, '2024-08-02', 2, 5),
+(45, 15, '2024-08-03', 3, 5);
 
 --
 -- Acionadores `venda`
@@ -320,7 +322,7 @@ ALTER TABLE `estoque`
 -- AUTO_INCREMENT de tabela `servico`
 --
 ALTER TABLE `servico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
@@ -332,7 +334,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `venda`
 --
 ALTER TABLE `venda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- Restrições para tabelas despejadas
