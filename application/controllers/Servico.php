@@ -45,7 +45,8 @@ class Servico extends CI_Controller {
             'data' => $this->input->post('data'),
             'servico' => $this->input->post('servico'),
             'produto' => $produtoId,
-            'quantidade_prod' => $quantidade
+            'quantidade_prod' => $quantidade,
+            'placa' => $this->input->post('placa')
         );
     
         foreach ($placasArray as $placa) {

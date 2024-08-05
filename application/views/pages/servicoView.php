@@ -1,6 +1,5 @@
 <?php 
 $user_nivel = $this->session->userdata('user_nivel');
-error_reporting(0)
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +38,7 @@ error_reporting(0)
                     <table id="servicos" class="table table-striped table-bordered">
                         <thead>
                             <tr>
+                                <th>Placa</th>
                                 <th>Mecânico</th>
                                 <th>Data</th>
                                 <th>Serviço</th>
@@ -72,6 +72,7 @@ error_reporting(0)
                     "dataSrc": ""
                 },
                 "columns": [
+                    { "data": "Placa" },
                     { "data": "Mecanico" },
                     { "data": "Data" },
                     { "data": "Servico" },
